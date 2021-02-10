@@ -1,0 +1,36 @@
+@font-face {
+  font-family: 'Australia';
+  /* src: url('../fonts/Australia 400.otf'); */
+  src: url('../fonts/Australia 400.otf');
+}
+
+@font-face {
+  font-family: 'Cornelia';
+  src: url('../fonts/Cornelia - Serif Cornelia 400.ttf');
+}
+
+@font-face {
+  font-family: 'Current';
+  src: url('../fonts/Current Regular 900.otf');
+}
+
+@font-face {
+  font-family: 'LonglineQuartFREE';
+  src: url('../fonts/LonglineQuartFREE 400.otf');
+}
+
+@font-face {
+  font-family: 'QualeyFree-Italic';
+  src: url('../fonts/QualeyFree-Italic 400.otf');
+}
+
+@font-face {
+  font-family: 'QualeyFree-Regular';
+  src: url('../fonts/QualeyFree-Regular 400.otf');
+}
+
+@font-face {
+  font-family: 'RustlerBarter-Regular';
+  src: url('../fonts/RustlerBarter-Regular 400.otf');
+}
+

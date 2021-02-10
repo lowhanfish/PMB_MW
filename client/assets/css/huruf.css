@@ -1,0 +1,90 @@
+.h_menu{
+  font-size:95% !important;
+  font-weight: 600;
+  color: #eeeeee;
+  text-shadow: 1px 1px rgb(27, 27, 27);
+  /* color: red; */
+}
+
+.h_menu1{
+  font-size:90% !important;
+  font-weight: 500;
+  color: #e0e0e0;
+  /* color: red; */
+}
+
+.h_iconMenu{
+  color: white !important;
+  text-shadow: 1px 1px rgb(27, 27, 27);
+}
+
+
+.h_judul{
+  /* font-family: Australia; */
+  font-size: 120%;
+  /* font-weight: 600; */
+  color: #ffffff;
+  /* color: #f7c531; */
+  /* text-shadow: 1px 1px rgb(27, 27, 27); */
+  text-transform: uppercase;
+}
+
+.h_Sub_judul{
+  /* font-family: QualeyFree-Regular; */
+  color: #ffffff;
+  font-size: 80%;
+  /* font-weight: 700; */
+  /* text-shadow: 0.5px 0.5px rgb(27, 27, 27); */
+  /* text-transform: uppercase; */
+}
+
+
+.h_modal_title{
+  color: white;
+}
+
+
+.HomeBarTitle{
+  font-size: 12pt;
+  /* font-weight: 600; */
+  color: #ffffff;
+}
+
+
+.HomeBarSubTitle{
+  font-size: 22pt;
+  font-weight: 600;
+  color: #f5f5f5;
+  /* text-shadow: 1px 1px rgb(27, 27, 27); */
+}
+
+
+.h_table_head > th{
+  color:white !important;
+  font-size: 11pt !important;
+  font-weight: 300 !important;
+  background:#5289E7;
+}
+
+.mediaTitle{
+  color: white;
+  font-size: 12pt;
+  font-weight: 500;
+}
+
+.mediaSubTitle{
+  color: white;
+  font-size: 10pt;
+}
+
+.h_tbody >td{
+  font-size: 10pt !important;
+  color: #5f5f5f;
+}
+
+.f_form-login{
+  font-size: 17pt;
+  color: #7aa2e5;
+  font-weight: 500;
+}
+
