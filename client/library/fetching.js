@@ -148,7 +148,7 @@ const getTingkatPendidikan = async ()=>{
 }
 
 
-const getDataJurusan = async (list, page_first2, cari_value2, tampil_data2)=>{
+const postDataJurusan = async (list, page_first2, cari_value2, tampil_data2)=>{
 
   return new Promise(resolve=>{
     fetch(storex.url.URL_DM_master_prodi + 'getRelasi', {
@@ -173,6 +173,31 @@ const getDataJurusan = async (list, page_first2, cari_value2, tampil_data2)=>{
   })
 
 
+
+}
+
+const postAllDataJurusan = async (list, page_first1, cari_value1, tampil_data1)=>{
+
+  return new Promise(resolve=>{
+    fetch(storex.url.URL_DM_master_pendidikan_jurusan + 'view_list', {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+          authorization: "kikensbatara " + localStorage.token
+        },
+        body: JSON.stringify({
+          pendidikan_id : list.pendidikan_id,
+          data_ke: page_first1,
+          page_limit : tampil_data1,
+          cari_value: cari_value1,
+        })
+      })
+        .then(res => res.json())
+        .then(res_data => {
+          console.log(res_data)
+          resolve(res_data)
+    });
+  })
 
 }
 
@@ -201,6 +226,7 @@ module.exports = {
     getFakultas : getFakultas,
     getProgram : getProgram,
     getTingkatPendidikan : getTingkatPendidikan,
-    getDataJurusan : getDataJurusan,
+    postDataJurusan : postDataJurusan,
+    postAllDataJurusan : postAllDataJurusan,
 
 }

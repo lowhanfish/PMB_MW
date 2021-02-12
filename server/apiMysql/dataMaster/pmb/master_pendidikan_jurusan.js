@@ -181,7 +181,7 @@ router.post('/removeData', (req, res)=> {
 
 
 router.post('/view_list', (req, res) => {
-    var data_batas = req.body.tampil_data;
+    var data_batas = req.body.page_limit;
     var data_star = (req.body.data_ke - 1)* data_batas;
     var cari = req.body.cari_value;
     var halaman = 1;

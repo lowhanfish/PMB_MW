@@ -128,7 +128,7 @@ router.post('/removeData', (req, res)=> {
     hapus_file(file);
 
     var query = `
-        DELETE FROM master_tahun WHERE tahun_id = `+req.body.id+`;
+        DELETE FROM master_tahun WHERE tahun_id = `+req.body.tahun_id+`;
     `;
     db.query(query, (err, row)=>{
         if(err){

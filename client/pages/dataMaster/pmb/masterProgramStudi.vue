@@ -263,13 +263,13 @@
         </v-dialog>
       <!-- =========================== HAPUS DATA ============================== -->
 
-      <!-- =========================== EDIT LIST ============================== -->
+      <!-- =========================== JUR LIST ============================== -->
         <v-dialog v-model="mdl_list" persistent max-width="950px">
 
           <v-card>
             <v-app-bar flat class="light-green darken-1">
               <v-toolbar-title class="title white--text pl-0">
-                List Program Berkesesuaian
+                List Jurusan Berkesesuaian
               </v-toolbar-title>
               <v-spacer></v-spacer>
               <v-btn color="white" icon  @click="mdl_list = false, emptyList()">
@@ -281,7 +281,7 @@
               <v-container>
                 <br>
                 <v-row>
-                  <v-col cols="12" md="4">
+                  <v-col cols="12" md="2">
                     <v-select
                       v-model="tampil_data2"
                       :items="$store.state.datatampil"
@@ -306,8 +306,18 @@
                       dense
                     />
                   </v-col>
-                  <v-col cols="12" md="4">
-                    <v-text-field v-model="cari_value2"  class="placeholerku" label="Cari Jurusan" outlined dense required/>
+                  <v-col cols="12" md="5">
+                    <v-text-field v-model="cari_value2" @input="selectList()" class="placeholerku" label="Cari Jurusan" outlined dense required/>
+                  </v-col>
+                  <v-col cols="12" md="1">
+                    <v-tooltip bottom>
+                      <template v-slot:activator="{ on, attrs }">
+                        <v-btn color="light-green darken-3" v-bind="attrs" v-on="on" @click="viewListJurusan(), mdl_list_add = true">
+                          <v-icon color="white">mdi-plus</v-icon>
+                        </v-btn>
+                      </template>
+                      <span>Tambah Jurusan</span>
+                    </v-tooltip>
                   </v-col>
                 </v-row>
 
@@ -324,13 +334,13 @@
                     </thead>
                     <tbody>
                       <tr class="h_table_body" v-for="(data, index) in list_relasi" :key="data.pendidikan_jurusan_id">
-                        <td class="text-center"  >{{indexing(index+1)}}.</td>
+                        <td class="text-center"  >{{indexingFunc(index+1, page_first2, tampil_data2)}}.</td>
                         <td>{{data.pendidikan_uraian}}</td>
                         <td>{{data.pendidikan_jurusan_uraian}}</td>
                         <td class="text-center">
                           <v-tooltip bottom>
                               <template v-slot:activator="{ on, attrs }">
-                                <v-btn color="red lighten-2" fab x-small depressed v-bind="attrs" v-on="on">
+                                <v-btn color="red lighten-2" fab x-small depressed v-bind="attrs" v-on="on" @click="removeDataJurusan(data.relasi_prodi_jurusan_id)">
                                   <v-icon color="white">mdi-window-close</v-icon>
                                 </v-btn>
                               </template>
@@ -342,16 +352,146 @@
                   </template>
                 </v-simple-table>
 
+
+                <hr class="batasAbu" />
+
+                <div class="text-center">
+
+                    <v-row justify="center">
+                      <v-col cols="12">
+                        <v-container class="max-width">
+                          <v-pagination
+                            v-model="page_first2"
+                            class="my-4"
+                            :length="page_last2"
+                            :total-visible="5"
+                            @input="selectList()"
+                            color="light-green darken-1"
+                          ></v-pagination>
+                        </v-container>
+                      </v-col>
+                    </v-row>
+
+                </div>
+
               </v-container>
             </v-card-text>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn color="red darken-1" text @click="mdl_list = false, emptyList()">Close</v-btn>
-              <v-btn color="blue darken-1" text @click="editData()">Simpan</v-btn>
+              <v-btn color="red darken-1" text @click="mdl_list = false">Close</v-btn>
             </v-card-actions>
+
           </v-card>
         </v-dialog>
-      <!-- =========================== EDIT LIST ============================== -->
+      <!-- =========================== JUR LIST ============================== -->
+
+      <!-- =========================== JUR LIST ADD ============================== -->
+        <v-dialog v-model="mdl_list_add" persistent max-width="950px">
+
+          <v-card>
+            <v-app-bar flat class="light-green darken-1">
+              <v-toolbar-title class="title white--text pl-0">
+                Tambah Jurusan Berkesesuaian
+              </v-toolbar-title>
+              <v-spacer></v-spacer>
+              <v-btn color="white" icon  @click="mdl_list_add = false, list_pendidikan_jurusan =[]">
+                <v-icon>mdi-close</v-icon>
+              </v-btn>
+            </v-app-bar>
+            <v-card-text>
+
+              <v-container>
+                <br>
+                <v-row>
+                  <v-col cols="12" md="2">
+                    <v-select
+                      v-model="tampil_data1"
+                      :items="$store.state.datatampil"
+                      label="Data Tampil*"
+                      outlined
+                      dense
+                      @input="viewListJurusan()"
+                      required
+                    />
+                  </v-col>
+
+                  <v-col cols="12" md="5">
+                    <v-autocomplete
+                      v-model="list.pendidikan_id"
+                      :items="list_pendidikan"
+                      :item-text="'uraian'"
+                      :item-value="'pendidikan_id'"
+                      label="Filter Tingkat Pendidikan"
+                      clearable
+                      @input="viewListJurusan()"
+                      outlined
+                      dense
+                    />
+                  </v-col>
+                  <v-col cols="12" md="5">
+                    <v-text-field v-model="cari_value1" @input="viewListJurusan()" class="placeholerku" label="Cari Jurusan" outlined dense required/>
+                  </v-col>
+                </v-row>
+
+
+                <v-simple-table style="width:100%">
+                  <template v-slot:default>
+                    <thead style="background:#5289E7">
+                      <tr class="h_table_head">
+                        <th class="text-center" style="width:10%">
+                          <input v-model="ambilSemuaJurusan" @change="pilihSemua()" type="checkbox">
+                        </th>
+                        <th class="text-left" style="width:5%">No</th>
+                        <th class="text-left" style="width:30%">Tingkat Pendidikan</th>
+                        <th class="text-left" style="width:55%">Jurusan</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr class="h_table_body" v-for="(data, index) in list_pendidikan_jurusan" :key="data.pendidikan_jurusan_id">
+                        <td class="text-center">
+                          <input v-model="list.pendidikan_jurusan_id" type="checkbox" :value="data">
+                        </td>
+                        <td class="text-center"  >{{indexingFunc(index+1, page_first1, tampil_data1)}}.</td>
+                        <td>{{data.pendidikan_uraian}}</td>
+                        <td>{{data.uraian}}</td>
+                      </tr>
+                    </tbody>
+                  </template>
+                </v-simple-table>
+
+
+                <hr class="batasAbu" />
+
+                <div class="text-center">
+
+                    <v-row justify="center">
+                      <v-col cols="12">
+                        <v-container class="max-width">
+                          <v-pagination
+                            v-model="page_first1"
+                            class="my-4"
+                            :length="page_last1"
+                            :total-visible="5"
+                            @input="viewListJurusan()"
+                            color="light-green darken-1"
+                          ></v-pagination>
+                        </v-container>
+                      </v-col>
+                    </v-row>
+
+                </div>
+
+              </v-container>
+            </v-card-text>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn color="red darken-1" text @click="mdl_list_add = false, list_pendidikan_jurusan =[]">Close</v-btn>
+              <v-btn color="blue darken-1" text @click="addDatajurusan()">Simpan</v-btn>
+            </v-card-actions>
+
+          </v-card>
+        </v-dialog>
+      <!-- =========================== JUR LIST ADD ============================== -->
 
     <!-- ++++++++++++++++++++++++++++++++++++++ MODAL ++++++++++++++++++++++++++++++++++++++++++ -->
   </div>
@@ -391,6 +531,7 @@
         list_pendidikan : [],
         list_pendidikan_jurusan : [],
         list_relasi : [],
+        ambilSemuaJurusan : false,
 
         mdl_add : false,
         mdl_edit : false,
@@ -509,9 +650,73 @@
 
       selectList : async function(){
         this.list_pendidikan = await this.FETCHING.getTingkatPendidikan();
-        var res_data =  await this.FETCHING.getDataJurusan(this.list, this.page_first2, this.cari_value2, this.tampil_data2);
+        var res_data =  await this.FETCHING.postDataJurusan(this.list, this.page_first2, this.cari_value2, this.tampil_data2);
         this.list_relasi = res_data.data;
         this.page_last2 = res_data.jml_data;
+      },
+
+      viewListJurusan : async function(){
+        var res_data =  await this.FETCHING.postAllDataJurusan(this.list, this.page_first1, this.cari_value1, this.tampil_data1);
+        this.list_pendidikan_jurusan = res_data.data;
+        this.page_last1 = res_data.jml_data;
+      },
+
+      addDatajurusan : function(){
+          fetch(this.$store.state.url.URL_DM_master_prodi + "addDatajurusan", {
+              method: "POST",
+              headers: {
+                  'content-type' : 'application/json',
+                  authorization: "kikensbatara " + localStorage.token
+              },
+              body: JSON.stringify(this.list)
+              }).then(res_data => {
+                  this.$store.commit('notifAdd', 'Menambah')
+                  this.selectList();
+          });
+      },
+      removeDataJurusan : async function(idnya){
+          await UMUM.notifDelete();
+         fetch(this.$store.state.url.URL_DM_master_prodi + "removeDataRelasi", {
+              method: "POST",
+              headers: {
+                "content-type": "application/json",
+                authorization: "kikensbatara " + localStorage.token
+              },
+              body: JSON.stringify({
+                  id: idnya,
+              })
+          }).then(res_data => {
+                this.selectList();
+                this.$store.commit('notifAdd', 'Menghapus')
+          });
+      },
+
+
+      pilihSemua : function(){
+        var data = this.list_pendidikan_jurusan
+        // console.log(data)
+        console.log('============')
+
+        if(this.ambilSemuaJurusan){
+            console.log('Data di ambil Semua');
+            data.forEach(element => {
+                this.list.pendidikan_jurusan_id.push(element)
+            });
+
+
+        }else{
+            console.log('Data di lepas Semua');
+            for (let j = 0; j < this.list.pendidikan_jurusan_id.length; j++) {
+                for (let i = 0; i < data.length; i++) {
+                    if(data[i].pendidikan_jurusan_id == this.list.pendidikan_jurusan_id[j].pendidikan_jurusan_id) {
+                        this.list.pendidikan_jurusan_id.splice(j, 1);
+                        console.log('data ke')
+                    }
+                  }
+            }
+        }
+
+        console.log(this.list.pendidikan_jurusan_id.length)
       },
 
       emptyList (){
@@ -522,6 +727,11 @@
       // ====================================== PAGINATE ====================================
         indexing : function(index){
             var idx = ((this.page_first-1)*this.page_limit)+index
+            return idx
+        },
+
+        indexingFunc : function(index, page_first, page_limit ){
+            var idx = ((page_first-1)*page_limit)+index
             return idx
         },
 
