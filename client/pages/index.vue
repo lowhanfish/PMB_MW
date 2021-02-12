@@ -7,10 +7,10 @@
         <v-col cols="12" md="3">
           <div>
             <v-row class="rowContent elevation-1">
-              <v-col cols="3" class="roundLeft vertical-center" style="background:#256AE1">
+              <v-col cols="3" class="roundLeft vertical-center" style="background:#9BC33C">
                 <v-icon style="color:white; font-size:45px">mdi-chart-bar</v-icon>
               </v-col>
-              <v-col cols="9" class="roundRight" style="background:#5289E7">
+              <v-col cols="9" class="roundRight" style="background:#AFCF63">
                 <span class="HomeBarTitle">Jumlah Kontent</span>
                 <br />
                 <span class="HomeBarSubTitle">54</span>
@@ -22,10 +22,10 @@
         <v-col cols="12" md="3">
           <div>
             <v-row class="rowContent elevation-1">
-              <v-col cols="3" class="roundLeft vertical-center" style="background:#E125C8">
+              <v-col cols="3" class="roundLeft vertical-center" style="background:#3CC3A7">
                 <v-icon style="color:white; font-size:45px">mdi-account</v-icon>
               </v-col>
-              <v-col cols="9" class="roundRight" style="background:#E752D3">
+              <v-col cols="9" class="roundRight" style="background:#63CFB9">
                 <span class="HomeBarTitle">Jumlah Kontent</span>
                 <br />
                 <span class="HomeBarSubTitle">54</span>
@@ -37,10 +37,10 @@
         <v-col cols="12" md="3">
           <div>
             <v-row class="rowContent elevation-1">
-              <v-col cols="3" class="roundLeft vertical-center" style="background:#E19C25">
+              <v-col cols="3" class="roundLeft vertical-center" style="background:#643CC3">
                 <v-icon style="color:white; font-size:45px">mdi-alert-circle</v-icon>
               </v-col>
-              <v-col cols="9" class="roundRight" style="background:#E7B052">
+              <v-col cols="9" class="roundRight" style="background:#8363CF">
                 <span class="HomeBarTitle">Jumlah Kontent</span>
                 <br />
                 <span class="HomeBarSubTitle">54</span>
@@ -52,10 +52,10 @@
         <v-col cols="12" md="3">
           <div>
             <v-row class="rowContent elevation-1">
-              <v-col cols="3" class="roundLeft vertical-center" style="background:#5FC13E">
+              <v-col cols="3" class="roundLeft vertical-center" style="background:#C33C58">
                 <v-icon style="color:white; font-size:45px">mdi-clipboard-alert</v-icon>
               </v-col>
-              <v-col cols="9" class="roundRight" style="background:#7FCD65">
+              <v-col cols="9" class="roundRight" style="background:#CF6379">
                 <span class="HomeBarTitle">Jumlah Kontent</span>
                 <br />
                 <span class="HomeBarSubTitle">54</span>

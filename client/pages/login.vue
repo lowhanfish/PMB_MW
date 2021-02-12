@@ -13,7 +13,7 @@
           <div style="padding-top:5%; padding-left:10%; padding-right:10%; padding-bottom:5%">
             <br>
             <hr class="blueku">
-            <span class="f_form-login">Login Pengguna</span>
+            <img src="img/logo.png" style="width:100%" alt="">
             <hr class="blueku1">
             <br>
             <div  v-if="errorMessage" >
@@ -42,7 +42,7 @@
               <!-- <hr class="blueku"> -->
               <br>
 
-              <v-btn type="submit" block color="#7aa2e5">
+              <v-btn type="submit" block color="#9bc33c">
                 <span style="color:white">Login</span>
               </v-btn>
 

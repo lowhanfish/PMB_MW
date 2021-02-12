@@ -87,7 +87,7 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-app-bar :clipped-left="clipped" fixed app style="background-color: #5289e7">
+    <v-app-bar :clipped-left="clipped" fixed app style="background-color: #9bc33c">
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" style="color:white" />
       <v-toolbar-title v-text="title" />
       <v-spacer />

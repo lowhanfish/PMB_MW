@@ -21,10 +21,10 @@ export default function ({ route, redirect, store }) {
   var listAkses = {};
   var routeSaatIni = replaceStr(route.path);
 
-  var readx = 0;
-  var updatex = 0;
-  var deletex = 0;
-  var addx = 0;
+  var readx = 1;
+  var updatex = 1;
+  var deletex = 1;
+  var addx = 1;
 
   console.log(store.state.aksesMenu)
 
@@ -33,9 +33,15 @@ export default function ({ route, redirect, store }) {
     if (checkPathku(route)) {
       listAkses = store.state.aksesMenu;
       readx = listAkses[routeSaatIni].readx;
+
       updatex = listAkses[routeSaatIni].updatex;
+      store.commit('ubahBtnState', { name : 'updatex',  list : updatex});
+
       deletex = listAkses[routeSaatIni].deletex;
+      store.commit('ubahBtnState', { name : 'deletex',  list : deletex});
+
       addx = listAkses[routeSaatIni].addx;
+      store.commit('ubahBtnState', { name : 'addx',  list : addx});
     }else{
     }
 

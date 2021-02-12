@@ -57,6 +57,47 @@ app.use('/checkAuth', middleware.isLoggedIn, checkAuth);
 
 
 
+    // MAIN SERVER
+
+    const master_agama = require('./apiMysql/dataMaster/pmb/master_agama');
+    app.use('/api/v1/master_agama', middleware.isLoggedIn, master_agama);
+    const master_gelombang = require('./apiMysql/dataMaster/pmb/master_gelombang');
+    app.use('/api/v1/master_gelombang', middleware.isLoggedIn, master_gelombang);
+    const master_jenis_kel = require('./apiMysql/dataMaster/pmb/master_jenis_kel');
+    app.use('/api/v1/master_jenis_kel', middleware.isLoggedIn, master_jenis_kel);
+    const master_jurusan = require('./apiMysql/dataMaster/pmb/master_jurusan');
+    app.use('/api/v1/master_jurusan', middleware.isLoggedIn, master_jurusan);
+    const master_pendidikan_jurusan = require('./apiMysql/dataMaster/pmb/master_pendidikan_jurusan');
+    app.use('/api/v1/master_pendidikan_jurusan', middleware.isLoggedIn, master_pendidikan_jurusan);
+    const master_pendidikan = require('./apiMysql/dataMaster/pmb/master_pendidikan');
+    app.use('/api/v1/master_pendidikan', middleware.isLoggedIn, master_pendidikan);
+    const master_prodi = require('./apiMysql/dataMaster/pmb/master_prodi');
+    app.use('/api/v1/master_prodi', middleware.isLoggedIn, master_prodi);
+    const master_program = require('./apiMysql/dataMaster/pmb/master_program');
+    app.use('/api/v1/master_program', middleware.isLoggedIn, master_program);
+    const master_program_strata = require('./apiMysql/dataMaster/pmb/master_program_strata');
+    app.use('/api/v1/master_program_strata', middleware.isLoggedIn, master_program_strata);
+    const master_tahun_studi = require('./apiMysql/dataMaster/pmb/master_tahun_studi');
+    app.use('/api/v1/master_tahun_studi', middleware.isLoggedIn, master_tahun_studi);
+    const master_tahun = require('./apiMysql/dataMaster/pmb/master_tahun');
+    app.use('/api/v1/master_tahun', middleware.isLoggedIn, master_tahun);
+    const masterFakultas = require('./apiMysql/dataMaster/pmb/masterFakultas');
+    app.use('/api/v1/masterFakultas', middleware.isLoggedIn, masterFakultas);
+
+    const master_des_kel = require('./apiMysql/dataMaster/wilayah/master_des_kel');
+    app.use('/api/v1/master_des_kel', middleware.isLoggedIn, master_des_kel);
+    const master_kecamatan = require('./apiMysql/dataMaster/wilayah/master_kecamatan');
+    app.use('/api/v1/master_kecamatan', middleware.isLoggedIn, master_kecamatan);
+    const master_kabupaten = require('./apiMysql/dataMaster/wilayah/master_kabupaten');
+    app.use('/api/v1/master_kabupaten', middleware.isLoggedIn, master_kabupaten);
+    const master_provinsi = require('./apiMysql/dataMaster/wilayah/master_provinsi');
+    app.use('/api/v1/master_provinsi', middleware.isLoggedIn, master_provinsi);
+    
+
+    // END MAIN SERVER
+
+
+
    
 
 

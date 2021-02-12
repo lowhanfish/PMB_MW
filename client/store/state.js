@@ -11,146 +11,39 @@ const lolow = {
       URL_DM_MENU : URL + 'api/v1/menuList/',
       URL_DM_KLP_USERS : URL + 'api/v1/kelompokUsers/',
       URL_DM_REGISTRASI : URL + 'api/v1/registrasi/',
+
+      URL_DM_master_agama : URL + 'api/v1/master_agama/',
+      URL_DM_master_gelombang : URL + 'api/v1/master_gelombang/',
+      URL_DM_master_jenis_kel : URL + 'api/v1/master_jenis_kel/',
+      URL_DM_master_jurusan : URL + 'api/v1/master_jurusan/',
+      URL_DM_master_pendidikan_jurusan : URL + 'api/v1/master_pendidikan_jurusan/',
+      URL_DM_master_pendidikan : URL + 'api/v1/master_pendidikan/',
+      URL_DM_masterFakultas : URL + 'api/v1/masterFakultas/',
+      URL_DM_master_prodi : URL + 'api/v1/master_prodi/',
+      URL_DM_master_program : URL + 'api/v1/master_program/',
+      URL_DM_master_program_strata : URL + 'api/v1/master_program_strata/',
+      URL_DM_master_tahun_studi : URL + 'api/v1/master_tahun_studi/',
+      URL_DM_master_tahun : URL + 'api/v1/master_tahun/',
+
+      URL_DM_master_des_kel : URL + 'api/v1/master_des_kel/',
+      URL_DM_master_kecamatan : URL + 'api/v1/master_kecamatan/',
+      URL_DM_master_kabupaten : URL + 'api/v1/master_kabupaten/',
+      URL_DM_master_provinsi : URL + 'api/v1/master_provinsi/',
     },
-    // MENU: [
-    //   {
-    //     icon: 'mdi-apps',
-    //     title: 'Home',
-    //     type : 0,
-    //     to: '/'
-    //   },
-    //   {
-    //     icon: 'mdi-chart-bubble',
-    //     title: 'Inspire',
-    //     type : 0,
-    //     to: '/inspire'
-    //   },
-    //   {
-    //     icon: 'mdi-chart-bubble',
-    //     title: 'Fonts',
-    //     type : 0,
-    //     to: '/fonts/fontsExample'
-    //   },
 
+    btn : {
+      addx : true,
+      updatex : true,
+      deletex : true,
 
-    //   {
-    //     icon: 'mdi-chart-bubble',
-    //     title: 'Data Master',
-    //     type : 1,
-    //     subItem: [
-    //       {
-    //         title: 'Master Koperasi',
-    //         type : 1,
-    //         subItem: [
-    //           {
-    //             title: 'Kelompok Koperasi',
-    //             type : 0,
-    //             to: '/dataMaster/masterKoperasi/kelompokKoperasi'
-    //           },
-    //           {
-    //             title: 'Sektor Usaha',
-    //             type : 0,
-    //             to: '/dataMaster/masterKoperasi/sektorUsaha'
-    //           },
-
-
-    //         ]
-
-    //       },
-    //       {
-    //         title: 'Authorization',
-    //         type : 1,
-    //         subItem: [
-    //           {
-    //             title: 'Menu List',
-    //             type : 0,
-    //             to: '/dataMaster/authorization/menuList'
-    //           },
-
-    //           {
-    //             title: 'Kelompok Pengguna',
-    //             type : 0,
-    //             to: '/dataMaster/authorization/klpUsers'
-    //           },
-    //         ]
-
-    //       },
-    //       {
-    //         title: 'Authentication',
-    //         type : 1,
-    //         subItem: [
-    //           {
-    //             title: 'Registrasi',
-    //             type : 0,
-    //             to: '/dataMaster/authentication/registrasi'
-    //           },
-    //         ]
-
-    //       },
-
-    //     ],
-    //   },
-
-
-
-    //   {
-    //     icon: 'mdi-chart-bubble',
-    //     title: 'Cth Sub Menu',
-    //     type : 1,
-    //     subItem: [
-    //       {
-    //         title: 'Karamba',
-    //         type : 0,
-    //         to: '/inspire'
-    //       },
-    //       {
-    //         title: 'Lautan',
-    //         type : 0,
-    //         to: '/'
-    //       },
-    //       // {
-    //       //   title: 'Fonts',
-    //       //   type : 1,
-    //       //   subItem: [
-    //       //     {
-    //       //       title: 'Contoh Huruf',
-    //       //       type : 0,
-    //       //       to: '/fonts/fontsExample'
-    //       //     },
-
-
-    //       //   ]
-
-    //       // },
-
-    //     ],
-    //   },
-
-    //   {
-    //     icon: 'mdi-chart-bubble',
-    //     title: 'Contentn',
-    //     type : 1,
-    //     subItem: [
-    //       {
-    //         title: 'Tabel Standar',
-    //         type : 0,
-    //         to: '/content/tableStandard'
-    //       },
-    //       {
-    //         title: 'List Media',
-    //         type : 0,
-    //         to: '/content/mediaList'
-    //       },
-    //     ],
-    //   }
-
-    //   // ++++++++++++++++++++++++ BATAS +++++++++++++++++++++++++
-    // ],
+    },
 
     type : [
       {id : 0, uraian : 'Single Menu'},
       {id : 1, uraian : 'Multy Menu'}
     ],
+
+    datatampil : [10,25, 50, 100, 250, 500],
 
     list_menu : null,
     aksesMenu : {},

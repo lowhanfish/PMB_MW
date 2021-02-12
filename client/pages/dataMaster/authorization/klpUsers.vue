@@ -2,7 +2,7 @@
   <div class="mainPage">
     <v-container>
       <v-card class="mx-auto" outlined>
-        <v-row style="background-color:#7aa2e5">
+        <v-row class="barPage">
           <v-col cols="12" md="4">
             <span class="h_judul">Kelompok Pengguna</span>
             <br />
@@ -409,7 +409,6 @@
         UMUM : UMUM,
 
 
-        page: 1,
         mdl_add : false,
         mdl_edit : false,
         mdl_remove : false,

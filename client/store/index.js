@@ -21,6 +21,9 @@ export const mutations = {
   ubahState(state, { name, list }) {
     state[name] = list
   },
+  ubahBtnState(state, { name, list }) {
+    state.btn[name] = list
+  },
 
 
 
