@@ -127,7 +127,7 @@ router.post('/removeData', (req, res)=> {
     hapus_file(file);
 
     var query = `
-        DELETE FROM master_pendidikan WHERE pendidikan_id = `+req.body.id+`;
+        DELETE FROM master_pendidikan WHERE pendidikan_id = `+req.body.pendidikan_id+`;
     `;
     db.query(query, (err, row)=>{
         if(err){

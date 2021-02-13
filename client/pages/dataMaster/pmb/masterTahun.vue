@@ -47,7 +47,7 @@
             <thead style="background:#5289E7">
               <tr class="h_table_head">
                 <th class="text-left" style="width:5%">No</th>
-                <th class="text-left" style="width:70%">Fakultas</th>
+                <th class="text-left" style="width:70%">Tahun</th>
                 <th class="text-left" style="width:15%">Act</th>
               </tr>
             </thead>

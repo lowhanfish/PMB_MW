@@ -342,7 +342,6 @@ router.post('/listSidebar', (req, res) => {
         LEFT JOIN menu_klp_list
         ON menu.id = menu_klp_list.menu_id AND menu_klp_list.menu_klp_id = `+ req.body.menu_klp_id + `
 
-        WHERE IF(menu.type = 1, true, menu_klp_list.readx) = true
 
 
         ORDER BY menu.urutan
