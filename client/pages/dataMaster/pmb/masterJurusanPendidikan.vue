@@ -10,13 +10,24 @@
           </v-col>
 
           <v-col cols="12" md="4">
-            <v-text-field class="placeholerku" prepend-inner-icon="mdi-magnify" dense solo clear-icon="mdi-close-circle" clearable placeholder="Cari Data" type="text"></v-text-field>
+            <v-autocomplete
+              class="placeholerku"
+              v-model="form.pendidikan_id"
+              :items="list_pendidikan"
+              @input="getView()"
+              :item-text="'uraian'"
+              :item-value="'pendidikan_id'"
+              label="Filter Pendidikan"
+              solo clearable
+              outlined
+              dense
+            />
           </v-col>
 
           <v-col cols="12" md="4" style="padding-right:25px">
             <v-row no-gutters>
               <v-col cols="10">
-                <v-text-field class="placeholerku" prepend-inner-icon="mdi-magnify" dense solo clear-icon="mdi-close-circle" clearable placeholder="Cari Data" type="text"></v-text-field>
+                <v-text-field class="placeholerku" prepend-inner-icon="mdi-magnify" dense solo clear-icon="mdi-close-circle" v-model="cari_value" @input="getView()" clearable placeholder="Cari Data" type="text"></v-text-field>
               </v-col>
               <v-col cols="1">
                 <v-tooltip bottom>
@@ -47,30 +58,22 @@
             <thead style="background:#5289E7">
               <tr class="h_table_head">
                 <th class="text-left" style="width:5%">No</th>
-                <th class="text-left" style="width:35%">Name</th>
-                <th class="text-left" style="width:35%">Calories</th>
+                <th class="text-left" style="width:45%">Tahun</th>
+                <th class="text-left" style="width:25%">Tahun</th>
                 <th class="text-left" style="width:15%">Act</th>
               </tr>
             </thead>
             <tbody>
-              <tr class="h_table_body">
-                <td class="text-center">1.</td>
-                <td>Oh</td>
-                <td>Tuhan</td>
+              <tr class="h_table_body" v-for="(data, index) in list_data" :key="data.id">
+                <td class="text-center">{{indexing(index+1)}}.</td>
+                <td>{{data.uraian}}</td>
+                <td>{{data.pendidikan_uraian}}</td>
                 <td class="text-center">
                   <v-btn-toggle mandatory>
-                    <v-tooltip bottom>
-                      <template v-slot:activator="{ on, attrs }">
-                        <v-btn color="light-green darken-1" fab small v-bind="attrs" v-on="on" @click="mdl_edit=true">
-                          <v-icon color="white">mdi-file-pdf</v-icon>
-                        </v-btn>
-                      </template>
-                      <span>Lihat Data</span>
-                    </v-tooltip>
 
                     <v-tooltip bottom>
                       <template v-slot:activator="{ on, attrs }">
-                        <v-btn color="orange darken-1" fab small v-bind="attrs" v-on="on" @click="mdl_edit=true" :disabled="!$store.state.btn.updatex">
+                        <v-btn color="orange darken-1" fab small v-bind="attrs" v-on="on" @click="selectData(data), mdl_edit=true" :disabled="!$store.state.btn.updatex">
                           <v-icon color="white">mdi-pencil</v-icon>
                         </v-btn>
                       </template>
@@ -79,12 +82,13 @@
 
                     <v-tooltip bottom>
                       <template v-slot:activator="{ on, attrs }">
-                        <v-btn color="red darken-4" fab small v-bind="attrs" v-on="on" @click="mdl_remove=true" :disabled="!$store.state.btn.deletex">
+                        <v-btn color="red darken-4" fab small v-bind="attrs" v-on="on" @click="removeData(data)" :disabled="!$store.state.btn.deletex">
                           <v-icon color="white">mdi-delete</v-icon>
                         </v-btn>
                       </template>
                       <span>Hapus Data</span>
                     </v-tooltip>
+
                   </v-btn-toggle>
                 </td>
               </tr>
@@ -106,6 +110,7 @@
                   class="my-4"
                   :length="page_last"
                   :total-visible="7"
+                  @input="getView()"
                   color="orange darken-1"
                 ></v-pagination>
               </v-container>
@@ -134,14 +139,24 @@
 
               <v-container>
                 <br>
-                <v-text-field class="placeholerku" label="Uraian" outlined dense required/>
-                <v-text-field class="placeholerku" label="Singkatan" outlined dense required/>
+                <v-autocomplete
+                  class="placeholerku"
+                  v-model="form.pendidikan_id"
+                  :items="list_pendidikan"
+                  :item-text="'uraian'"
+                  :item-value="'pendidikan_id'"
+                  label="Tingkat Pendidikan"
+                  solo clearable
+                  outlined
+                  dense
+                />
+                <v-text-field v-model="form.uraian" class="placeholerku" label="Jurusan" outlined dense required/>
               </v-container>
             </v-card-text>
             <v-card-actions>
               <v-spacer></v-spacer>
               <v-btn color="red darken-1" text @click="mdl_add = false">Close</v-btn>
-              <v-btn color="blue darken-1" text >Simpan</v-btn>
+              <v-btn color="blue darken-1" text @click="addData()">Simpan</v-btn>
             </v-card-actions>
           </v-card>
         </v-dialog>
@@ -164,14 +179,24 @@
 
               <v-container>
                 <br>
-                <v-text-field class="placeholerku" label="Uraian" outlined dense required/>
-                <v-text-field class="placeholerku" label="Singkatan" outlined dense required/>
+                <v-autocomplete
+                  class="placeholerku"
+                  v-model="form.pendidikan_id"
+                  :items="list_pendidikan"
+                  :item-text="'uraian'"
+                  :item-value="'pendidikan_id'"
+                  label="Tingkat Pendidikan"
+                  solo clearable
+                  outlined
+                  dense
+                />
+                <v-text-field v-model="form.uraian" class="placeholerku" label="Jurusan" outlined dense required/>
               </v-container>
             </v-card-text>
             <v-card-actions>
               <v-spacer></v-spacer>
               <v-btn color="red darken-1" text @click="mdl_edit = false">Close</v-btn>
-              <v-btn color="blue darken-1" text >Simpan</v-btn>
+              <v-btn color="blue darken-1" text @click="editData()">Simpan</v-btn>
             </v-card-actions>
           </v-card>
         </v-dialog>
@@ -218,18 +243,12 @@
   export default {
     data () {
       return {
-         cthSelect : '',
-        itemSelect : [
-          {idItemSelect : 1, nama:'Nur Hidayat'},
-          {idItemSelect : 2, nama:'Rizwan M Risal'},
-        ],
-        eventTestt : '',
-
 
 
         form : {
-          id : '',
-          uraian : '',
+          pendidikan_jurusan_id : '',
+          pendidikan_id : '',
+          uraian : ''
         },
         page_first: 1,
         page_last: 0,
@@ -246,12 +265,122 @@
         cthSelect : '',
 
         list_data : [],
-        list_menu : [],
+        list_pendidikan : [],
 
 
       }
     },
     methods: {
+      getView : function(){
+        // this.$store.commit("shoWLoading");
+        fetch(this.$store.state.url.URL_DM_master_pendidikan_jurusan + "view", {
+            method: "POST",
+            headers: {
+            "content-type": "application/json",
+            authorization: "kikensbatara " + localStorage.token
+            },
+            body: JSON.stringify({
+                pendidikan_id : this.form.pendidikan_id,
+                data_ke: this.page_first,
+                cari_value: this.cari_value,
+                page_limit : this.page_limit,
+            })
+        })
+            .then(res => res.json())
+            .then(res_data => {
+              // console.log(res_data)
+              this.list_data = res_data.data;
+              this.page_last = res_data.jml_data;
+        });
+      },
+
+
+      addData : function(number) {
+        // this.form.createdAt = UMUM.NOW()
+        fetch(this.$store.state.url.URL_DM_master_pendidikan_jurusan + "addData", {
+            method: "POST",
+            headers: {
+              "content-type": "application/json",
+              authorization: "kikensbatara " + localStorage.token
+            },
+            body: JSON.stringify(this.form)
+        }).then(res_data => {
+            this.getView();
+            this.$store.commit('notifAdd', 'Menambah')
+        });
+
+
+      },
+
+      editData : function(){
+        fetch(this.$store.state.url.URL_DM_master_pendidikan_jurusan + "editData", {
+            method: "POST",
+            headers: {
+              "content-type": "application/json",
+              authorization: "kikensbatara " + localStorage.token
+            },
+            body: JSON.stringify(this.form)
+        }).then(res_data => {
+
+            this.getView();
+            this.$store.commit('notifAdd', 'Mengubah')
+        });
+      },
+
+      removeData : async function(data){
+
+        await UMUM.notifDelete();
+        fetch(this.$store.state.url.URL_DM_master_pendidikan_jurusan + "removeData", {
+            method: "POST",
+            headers: {
+              "content-type": "application/json",
+              authorization: "kikensbatara " + localStorage.token
+            },
+            body: JSON.stringify(data)
+        }).then(res_data => {
+            this.getView();
+            this.mdl_remove = false;
+            this.$store.commit('notifAdd', 'Menghapus')
+        });
+
+      },
+
+      selectData : async function(data){
+          this.form.pendidikan_jurusan_id = data.pendidikan_jurusan_id;
+          this.form.pendidikan_id = data.pendidikan_id;
+          this.form.uraian = data.uraian;
+
+      },
+
+      // ====================================== PAGINATE ====================================
+        indexing : function(index){
+            var idx = ((this.page_first-1)*this.page_limit)+index
+            return idx
+        },
+
+        cari_data : function(){
+            this.page_first = 1;
+            this.getData();
+        },
+
+
+        funcAwaitAdd : async function(){
+          this.list_pendidikan = await this.FETCHING.getTingkatPendidikan();
+        }
+
+
+      // ====================================== PAGINATE ====================================
+
+
+
+
+
+    },
+    mounted () {
+
+      this.funcAwaitAdd()
+      this.getView();
+
 
     },
   }

@@ -277,7 +277,7 @@ router.post('/removeData', (req, res)=> {
         var halaman = 1;
 
         var pendidikan_id = req.body.pendidikan_id
-        console.log(req.body)
+        // console.log(req.body)
 
         if (pendidikan_id == null || pendidikan_id==undefined || pendidikan_id == '' || pendidikan_id == ' ' || pendidikan_id == '-') {
             query_filter = ''
@@ -363,14 +363,16 @@ router.post('/removeData', (req, res)=> {
 
     router.post('/getRelasiPeminatan', (req, res) => {
 
-        // console.log(req.body)
+        console.log(req.body)
     
         let view = `
             SELECT 
             master_relasi_prodi_jurusan.*,
             master_prodi.uraian as master_prodi_uraian,
             master_program.program_id,
-            master_program.uraian as program_uraian
+            master_program.uraian as program_uraian,
+            master_program.singkatan as program_singkatan,
+            master_fakultas.uraian as fakultas_uraian
 
             FROM master_relasi_prodi_jurusan
             
@@ -380,14 +382,18 @@ router.post('/removeData', (req, res)=> {
             JOIN master_program
             ON master_program.program_id = master_prodi.program_id
 
+            JOIN master_fakultas
+            ON master_fakultas.id = master_prodi.fakultas_id
+
 
             WHERE 
-            master_relasi_prodi_jurusan.pendidikan_jurusan_id = `+req.body.pendidikan_jurusan_id+` AND
-            master_program.program_id = `+req.body.program_id+`
+            master_relasi_prodi_jurusan.pendidikan_jurusan_id = `+req.body.pendidikan_jurusan_id+`
             
-        `
+            `
+            // AND master_relasi_prodi_jurusan.prodi_id = `+req.body.prodi_id+`
         db.query(view, (err, row)=>{
             if(err){
+                console.log(err)
                 res.send(err);
             }else{
                 res.send(row);

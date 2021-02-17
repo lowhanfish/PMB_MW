@@ -136,50 +136,6 @@ router.post('/signup', (req, res, next) => {
             }
         })
 
-        // db.query(view)
-        //     .then(cursor => cursor.all())
-        //     .then((row, err) => {
-        //         if (row.length <= 0) {
-
-
-
-        //             bcrypt.hash(req.body.password.trim(), 12).then(hashedPassword => {
-
-        //                 const data = {
-        //                     id: uniqid(),
-        //                     email: req.body.email,
-        //                     level: req.body.level,
-        //                     nama: req.body.nama,
-        //                     hp: req.body.hp,
-        //                     username: req.body.username,
-        //                     password: hashedPassword
-        //                 }
-        //                 var reques = JSON.stringify(data)
-
-        //                 let insert = `insert ` + reques + ` into users`
-
-        //                 db.query(insert)
-        //                     .then(cursor => cursor.all())
-        //                     .then((row, err) => {
-        //                         if (err) {
-        //                             console.log(err)
-        //                             res.send('Gagal dalam meregistrasi ');
-        //                         } else {
-        //                             console.log('suksesssssssssssssssss')
-        //                             res.send(row);
-        //                         }
-        //                     });
-
-        //             });
-
-
-        //         } else {
-        //             const error = new Error('Username atau email sudah digunakan sebelumnya');
-        //             res.status(409);
-        //             next(error);
-        //         }
-        //     });
-
 
     } else {
         res.status(422);

@@ -144,6 +144,118 @@ router.post('/login', (req, res, next) =>{
 });
 
 
+
+
+router.post('/loginUsers', (req, res, next) =>{
+
+    console.log('LOGIN SDH DI PANGGGIL')
+
+
+    let view = ` 
+    SELECT users.*
+    FROM users 
+    WHERE email = '`+req.body.email+`';
+    `;
+
+    dbs.query(view, (err, row)=>{
+
+        if(row.length <= 0) {
+            // Lakukan insert data users
+            registrasiPendaftar(req,res,row)
+
+        }else{
+            // Lakukan Login data users
+            loginPendaftar(req,res,row)
+           
+        }
+    })
+
+
+});
+
+
+function registrasiPendaftar(req,res,row){
+    
+    bcrypt.hash(req.body.id.trim(), 12).then(hashedPassword => {
+        const query = `
+            INSERT INTO users (id, username, nama, email, password, menu_klp)
+            VALUES (
+                '`+uniqid()+`',
+                '`+req.body.id+`',
+                '`+req.body.nama+`',
+                '`+req.body.email+`',
+                '`+hashedPassword+`',
+                20
+            )
+        `
+        dbs.query(query, (err1, row1) => {
+            if (err1) {
+                console.log(err1)
+                res.send('Gagal dalam meregistrasi ');
+            }else{
+                console.log('suksesssssssssssssssss')
+                loginPendaftar(req,res,row1)
+                // res.send(row1);
+            }
+        })
+    });
+}
+
+
+function loginPendaftar(req,res,row){
+    console.log("ASSSSSSSSSSSSUUUUUUUUUUUUUU")
+    console.log(req.body)
+
+
+
+    let view = `SELECT * FROM users WHERE username = '`+req.body.id+`'`;
+
+    dbs.query(view, (err, row)=>{
+
+            var user = {}
+            for (var i in row) {user = row[i]}
+
+            const payload =  {
+                _id: user.id,
+                username : user.username,
+                profile : {
+                    nama : user.nama,
+                    email : user.email,
+                    username : user.username
+                }
+            };
+            
+            // console.log("Token_secret : ", process.env.TOKEN_SECRET);
+
+
+            bcrypt.compare(req.body.id, user.password).then((result) => {
+                // Jika client mengirimkan password yang benar
+                if(result){
+                    jwt.sign(payload, process.env.TOKEN_SECRET, {
+                        expiresIn: '8640h'
+                    }, (err, token) => {
+                        if(err){
+                            console.log(err);
+                            respondError422(res, next, "Kesalahan dlm pembuatan token");
+                        }else{
+                            res.json({
+                                token : token,
+                                profile : payload
+                            });
+                        }
+                    })
+                }else{
+                    respondError422(res, next, "Password salah");
+                }
+            });
+
+    })
+
+}
+
+
+
+
 function respondError422(res, next, text){
     res.status(422);
     const error = new Error(text);

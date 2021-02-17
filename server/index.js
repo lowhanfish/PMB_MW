@@ -62,7 +62,7 @@ app.use('/checkAuth', middleware.isLoggedIn, checkAuth);
     const master_agama = require('./apiMysql/dataMaster/pmb/master_agama');
     app.use('/api/v1/master_agama', middleware.isLoggedIn, master_agama);
     const master_gelombang = require('./apiMysql/dataMaster/pmb/master_gelombang');
-    app.use('/api/v1/master_gelombang', middleware.isLoggedIn, master_gelombang);
+    app.use('/api/v1/master_gelombang', master_gelombang);
     const master_jenis_kel = require('./apiMysql/dataMaster/pmb/master_jenis_kel');
     app.use('/api/v1/master_jenis_kel', middleware.isLoggedIn, master_jenis_kel);
     const master_jurusan = require('./apiMysql/dataMaster/pmb/master_jurusan');
@@ -80,7 +80,7 @@ app.use('/checkAuth', middleware.isLoggedIn, checkAuth);
     const master_tahun_studi = require('./apiMysql/dataMaster/pmb/master_tahun_studi');
     app.use('/api/v1/master_tahun_studi', middleware.isLoggedIn, master_tahun_studi);
     const master_tahun = require('./apiMysql/dataMaster/pmb/master_tahun');
-    app.use('/api/v1/master_tahun', middleware.isLoggedIn, master_tahun);
+    app.use('/api/v1/master_tahun', master_tahun);
     const masterFakultas = require('./apiMysql/dataMaster/pmb/masterFakultas');
     app.use('/api/v1/masterFakultas', middleware.isLoggedIn, masterFakultas);
 
@@ -92,17 +92,22 @@ app.use('/checkAuth', middleware.isLoggedIn, checkAuth);
     app.use('/api/v1/master_kabupaten', middleware.isLoggedIn, master_kabupaten);
     const master_provinsi = require('./apiMysql/dataMaster/wilayah/master_provinsi');
     app.use('/api/v1/master_provinsi', middleware.isLoggedIn, master_provinsi);
-    
-
     // END MAIN SERVER
 
 
-
-   
-
-
     // PUBLISH
-
+    const publish_as = require('./apiMysql/publish/as');
+    app.use('/api/v1/publish_as', middleware.isLoggedIn, publish_as);
+    const publish_bt = require('./apiMysql/publish/bt');
+    app.use('/api/v1/publish_bt', middleware.isLoggedIn, publish_bt);
+    const publish_dd = require('./apiMysql/publish/dd');
+    app.use('/api/v1/publish_dd', middleware.isLoggedIn, publish_dd);
+    const publish_fl = require('./apiMysql/publish/fl');
+    app.use('/api/v1/publish_fl', middleware.isLoggedIn, publish_fl);
+    const publish_jp = require('./apiMysql/publish/jp');
+    app.use('/api/v1/publish_jp', middleware.isLoggedIn, publish_jp);
+    const publish_ot = require('./apiMysql/publish/ot');
+    app.use('/api/v1/publish_ot', middleware.isLoggedIn, publish_ot);
    
     // PUBLISH
 

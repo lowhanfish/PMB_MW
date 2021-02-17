@@ -28,6 +28,37 @@ router.get('/', (req, res) => {
 });
 
 
+router.post('/', (req, res) => {
+    // console.log("HY I CALL DIA")
+    // console.log(req.body)
+    var query_filter = ''
+    var uraian = req.body.uraian
+    if (uraian == null || uraian==undefined || uraian == '' || uraian == ' ' || uraian == '-') {
+        query_filter = ''
+    }else{
+        query_filter = `master_pendidikan_jurusan.uraian LIKE '%`+uraian+`%'  AND `
+    }
+
+    let view = ` 
+    SELECT *
+    FROM master_pendidikan_jurusan 
+    WHERE 
+    `+query_filter+` master_pendidikan_jurusan.pendidikan_id = `+req.body.pendidikan_id+`
+    LIMIT 10
+    `;
+
+    db.query(view, (err, row)=>{
+        if (err) {
+            res.json(err)
+        }else{
+            res.json(row)
+        }
+    })
+
+
+});
+
+
 
 
 router.post('/view', (req, res) => {
@@ -158,7 +189,7 @@ router.post('/removeData', (req, res)=> {
     hapus_file(file);
 
     var query = `
-        DELETE FROM master_pendidikan_jurusan WHERE pendidikan_jurusan_id = `+req.body.id+`;
+        DELETE FROM master_pendidikan_jurusan WHERE pendidikan_jurusan_id = `+req.body.pendidikan_jurusan_id+`;
     `;
     db.query(query, (err, row)=>{
         if(err){
@@ -199,11 +230,6 @@ router.post('/view_list', (req, res) => {
     }else{
         query_filter = "AND master_pendidikan.pendidikan_id = "+pendidikan_id+""
     }
-
-
-
-
-
     let jml_data = `
         SELECT
         master_pendidikan_jurusan.*,

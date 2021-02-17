@@ -147,7 +147,6 @@ const getTingkatPendidikan = async ()=>{
   })
 }
 
-
 const postDataJurusan = async (list, page_first2, cari_value2, tampil_data2)=>{
 
   return new Promise(resolve=>{

@@ -1,0 +1,206 @@
+.h_menu{
+  font-size:95% !important;
+  font-weight: 550;
+  /* color: #eeeeee; */
+  /* text-shadow: 1px 1px rgb(27, 27, 27); */
+  /* color: red; */
+  color: #5d5d5d;
+}
+
+.h_menu1{
+  font-size:90% !important;
+  font-weight: 500;
+  /* color: #e0e0e0; */
+  color: #747474;
+  /* color: red; */
+}
+
+.h_iconMenu{
+  color: white !important;
+  text-shadow: 1px 1px rgb(27, 27, 27);
+}
+
+
+.h_judul{
+  /* font-family: Australia; */
+  font-size: 120%;
+  /* font-weight: 600; */
+  color: #ffffff;
+  /* color: #f7c531; */
+  /* text-shadow: 1px 1px rgb(27, 27, 27); */
+  text-transform: uppercase;
+}
+
+.h_Sub_judul{
+  /* font-family: QualeyFree-Regular; */
+  color: #ffffff;
+  font-size: 80%;
+  /* font-weight: 700; */
+  /* text-shadow: 0.5px 0.5px rgb(27, 27, 27); */
+  /* text-transform: uppercase; */
+}
+
+
+.h_modal_title{
+  color: white;
+}
+
+
+.judulPimpinan{
+  font-size: 18pt;
+  font-weight: bold;
+}
+
+
+.h_abu_tua{
+  color: #434929;
+}
+
+.h_putih_kuning{
+  color: #fffeee;
+}
+
+.f_pengantar{
+  font-size: 12pt;
+  position: absolute;
+  top: 50%;
+  transform: translateY(45%);
+  margin-left: 5px;
+  margin-right: 10px;
+
+
+}
+.tengahVert{
+
+  position: relative;
+  /* padding-left: 5px !important;
+  padding-right: 5px !important; */
+
+}
+
+.h_title_isi{
+  font-size: 11pt;
+  color: #575757;
+  font-weight: 500;
+}
+
+.h_title_judul_hijau{
+  font-size: 20pt;
+  font-weight: 600;
+  color: #78b83e;
+}
+
+.h_title_judul_kuning{
+  font-size: 20pt;
+  font-weight: 600;
+  color: #c8a400;
+}
+
+.h_isi_table > td{
+  font-size: 8pt !important;
+}
+
+
+a:link {
+  text-decoration: none;
+}
+
+.h_ket{
+  color: white;
+  font-size: 11px;
+}
+
+.f_loading{
+  font-size: 18px;
+  color: #fffeee;
+  font-weight: 600;
+  margin-top: -15px !important;
+  position: relative;
+}
+
+.prodi_fakultas{
+
+  font-size: 12px;
+  font-weight: 600;
+  color: #9b9b9b;
+}
+
+.prodi_prodi{
+  font-size: 14px;
+  font-weight: 600;
+  color: #7e7e7e;
+}
+
+
+
+@media only screen and (max-width: 1375px) {
+  .judulPimpinan{
+    font-size: 13pt;
+    /* font-weight: bold; */
+  }
+
+  .f_pengantar{
+    font-size: 10pt;
+    display: inline-block; vertical-align: middle;
+  }
+
+  .h_title_isi{
+    font-size: 12pt;
+  }
+
+  .h_title_judul_hijau{
+    font-size: 18pt;
+  }
+  .h_title_judul_kuning{
+    font-size: 18pt;
+  }
+
+
+
+
+
+}
+
+
+@media only screen and (max-width: 1310px) {
+  .judulPimpinan{
+    font-size: 12pt;
+    /* font-weight: bold; */
+  }
+
+  .f_pengantar{
+    font-size: 8pt;
+  }
+
+  .h_title_isi{
+    font-size: 8pt;
+  }
+
+  .h_title_judul_hijau{
+    font-size: 16pt;
+  }
+  .h_title_judul_kuning{
+    font-size: 16pt;
+  }
+
+
+}
+
+
+
+
+
+
+@media only screen and (max-width: 1024px) {
+  .judulPimpinan{
+    font-size: 12pt;
+    /* font-weight: bold; */
+  }
+
+  .f_pengantar{
+    font-size: 8pt;
+  }
+
+}
+
+

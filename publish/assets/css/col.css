@@ -1,0 +1,31 @@
+[class*="colx-"] {
+  float: left;
+  /* border: 1px solid red; */
+}
+
+[class*="colx"] {
+  float: left;
+  width: auto;
+  /* border: 1px solid red; */
+}
+
+
+
+.colx-1 {width: 8.33%;}
+.colx-2 {width: 16.66%;}
+.colx-3 {width: 25%;}
+.colx-4 {width: 33.33%;}
+.colx-5 {width: 41.66%;}
+.colx-6 {width: 50%;}
+.colx-7 {width: 58.33%;}
+.colx-8 {width: 66.66%;}
+.colx-9 {width: 75%;}
+.colx-10 {width: 83.33%;}
+.colx-11 {width: 91.66%;}
+.colx-12 {width: 100%;}
+
+
+
+.rowx{
+  width: 100%;
+}
