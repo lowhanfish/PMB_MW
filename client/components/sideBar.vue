@@ -9,7 +9,7 @@
 
          <v-list-item to="/" router exact>
           <v-list-item-action>
-            <v-icon class="h_iconMenu">mdi-check</v-icon>
+            <v-icon class="h_iconMenu">mdi-home</v-icon>
           </v-list-item-action>
 
           <v-list-item-content style="text-align:left">

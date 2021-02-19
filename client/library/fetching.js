@@ -27,8 +27,6 @@ const getMasterMenu = async ()=>{
   })
 }
 
-
-
 // ini buat ambil menu pada saat edit data
 const postMasterMenu = async (id)=>{
   return new Promise(resolve=>{
@@ -201,12 +199,57 @@ const postAllDataJurusan = async (list, page_first1, cari_value1, tampil_data1)=
 }
 
 
+const getTahun = async ()=>{
+  return new Promise(resolve=>{
+    fetch(storex.url.URL_DM_master_tahun + "", {
+        method: "GET",
+        headers: {
+        "content-type": "application/json",
+        authorization: "kikensbatara " + localStorage.token
+        }
+      })
+        .then(res => res.json())
+        .then(res_data => {
+          // console.log(res_data)
+          resolve(res_data)
+    });
+  })
+}
 
+const getGelombang = async ()=>{
+  console.log("GET GELOMBANG")
+  return new Promise(resolve=>{
+    fetch(storex.url.URL_DM_master_gelombang + "", {
+        method: "GET",
+        headers: {
+        "content-type": "application/json",
+        authorization: "kikensbatara " + localStorage.token
+        }
+      })
+        .then(res => res.json())
+        .then(res_data => {
+          // console.log(res_data)
+          resolve(res_data)
+    });
+  })
+}
 
-
-
-
-
+const getProdi = async ()=>{
+  return new Promise(resolve=>{
+    fetch(storex.url.URL_DM_master_prodi + "", {
+        method: "GET",
+        headers: {
+        "content-type": "application/json",
+        authorization: "kikensbatara " + localStorage.token
+        }
+      })
+        .then(res => res.json())
+        .then(res_data => {
+          // console.log(res_data)
+          resolve(res_data)
+    });
+  })
+}
 
 
 
@@ -227,5 +270,8 @@ module.exports = {
     getTingkatPendidikan : getTingkatPendidikan,
     postDataJurusan : postDataJurusan,
     postAllDataJurusan : postAllDataJurusan,
+    getTahun : getTahun,
+    getGelombang : getGelombang,
+    getProdi : getProdi,
 
 }

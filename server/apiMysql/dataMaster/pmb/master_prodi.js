@@ -364,10 +364,11 @@ router.post('/removeData', (req, res)=> {
     router.post('/getRelasiPeminatan', (req, res) => {
 
         console.log(req.body)
-    
+        // master_relasi_prodi_jurusan.*,
+        
         let view = `
             SELECT 
-            master_relasi_prodi_jurusan.*,
+            master_prodi.prodi_id as prodi_id,
             master_prodi.uraian as master_prodi_uraian,
             master_program.program_id,
             master_program.uraian as program_uraian,

@@ -1,3 +1,21 @@
+.kop1{
+  font-size: 12pt !important;
+  font-weight: bold !important;
+}
+.kop2{
+  font-size: 10pt !important;
+  font-weight: bold !important;
+}
+.kop3{
+  font-size: 9pt !important;
+  /* font-weight: bold; */
+  font-style: italic;
+}
+
+.kop4{
+  font-size: 9.5pt !important;
+}
+
 .h_menu{
   font-size:95% !important;
   font-weight: 600;
@@ -88,3 +106,6 @@
   font-weight: 500;
 }
 
+.upper{
+  text-transform: uppercase;
+}

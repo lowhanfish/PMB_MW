@@ -16,7 +16,7 @@
         <v-card-text>
           <v-container>
             <br />
-            <v-row>
+            <v-row v-if="$store.state.reg.el == 1">
               <v-col cols="12" md="6" class="">
                 <v-select v-model="tahun_id"
                   :items="list_tahun"
@@ -77,19 +77,19 @@
 
               <v-stepper-items>
                 <v-stepper-content step="1">
-                  <compAS  ref='compAS' v-if="$store.state.reg.el == 1"/>
+                  <compAS ref='compAS' v-if="$store.state.reg.el == 1"/>
                 </v-stepper-content>
                  <v-stepper-content step="2">
-                  <compJP  v-if="$store.state.reg.el == 2"/>
+                  <compJP ref='compJP' v-if="$store.state.reg.el == 2"/>
                 </v-stepper-content>
                 <v-stepper-content step="3">
-                  <compDD  v-if="$store.state.reg.el == 3"/>
+                  <compDD ref='compDD' v-if="$store.state.reg.el == 3"/>
                 </v-stepper-content>
                 <v-stepper-content step="4">
-                  <compOT  v-if="$store.state.reg.el == 4"/>
+                  <compOT ref='compOT' v-if="$store.state.reg.el == 4"/>
                 </v-stepper-content>
                 <v-stepper-content step="5">
-                  <compBL  v-if="$store.state.reg.el == 5"/>
+                  <compBL ref='compBL' v-if="$store.state.reg.el == 5"/>
                 </v-stepper-content>
               </v-stepper-items>
             </v-stepper>
@@ -273,6 +273,10 @@ export default {
 
     tessaja(){
       this.$refs.compAS.getView();
+      // this.$refs.compJP.getView();
+      // this.$refs.compDD.getView();
+      // this.$refs.compOT.getView();
+      // this.$refs.compBL.getView();
     }
 
   },

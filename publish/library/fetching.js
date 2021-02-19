@@ -21,7 +21,6 @@ const getJenisKelamin = async ()=>{
   })
 }
 
-
 const getAgama = async ()=>{
   return new Promise(resolve=>{
     fetch(store.url.URL_DM_master_agama + "", {
@@ -38,7 +37,6 @@ const getAgama = async ()=>{
     });
   })
 }
-
 
 const getProv = async ()=>{
   return new Promise(resolve=>{
@@ -57,6 +55,65 @@ const getProv = async ()=>{
   })
 }
 
+const postKab = async (provinsi_id)=>{
+  return new Promise(resolve=>{
+    fetch(store.url.URL_DM_master_kabupaten + "", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+          authorization: "kikensbatara " + localStorage.token
+        },
+        body: JSON.stringify({
+          provinsi_id : provinsi_id,
+        })
+      })
+        .then(res => res.json())
+        .then(res_data => {
+          // console.log(res_data)
+          resolve(res_data)
+    });
+  })
+}
+
+const postKec = async (kabupaten_id)=>{
+  return new Promise(resolve=>{
+    fetch(store.url.URL_DM_master_kecamatan + "", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+          authorization: "kikensbatara " + localStorage.token
+        },
+        body: JSON.stringify({
+          kabupaten_id : kabupaten_id,
+        })
+      })
+        .then(res => res.json())
+        .then(res_data => {
+          // console.log(res_data)
+          resolve(res_data)
+    });
+  })
+}
+
+const postDesKel = async (kecamatan_id)=>{
+  return new Promise(resolve=>{
+    fetch(store.url.URL_DM_master_des_kel + "", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+          authorization: "kikensbatara " + localStorage.token
+        },
+        body: JSON.stringify({
+          kecamatan_id : kecamatan_id,
+        })
+      })
+        .then(res => res.json())
+        .then(res_data => {
+          // console.log(res_data)
+          resolve(res_data)
+    });
+  })
+}
 
 const getPendidikan = async ()=>{
   return new Promise(resolve=>{
@@ -97,9 +154,6 @@ const postPendidikanJurusan = async (pendidikan_id, uraian)=>{
 }
 
 
-
-
-
 const getProg = async ()=>{
   return new Promise(resolve=>{
     fetch(store.url.URL_DM_master_program + "", {
@@ -117,7 +171,6 @@ const getProg = async ()=>{
   })
 }
 
-
 const postProdiRelasi = async (pendidikan_jurusan_id)=>{
   console.log("GET GELOMBANG")
   return new Promise(resolve=>{
@@ -133,12 +186,11 @@ const postProdiRelasi = async (pendidikan_jurusan_id)=>{
       })
         .then(res => res.json())
         .then(res_data => {
-          console.log(res_data)
+          // console.log(res_data)
           resolve(res_data)
     });
   })
 }
-
 
 const getTahun = async ()=>{
   return new Promise(resolve=>{
@@ -156,7 +208,6 @@ const getTahun = async ()=>{
     });
   })
 }
-
 
 const getGelombang = async ()=>{
   console.log("GET GELOMBANG")
@@ -198,6 +249,9 @@ module.exports = {
     getJenisKelamin : getJenisKelamin,
     getAgama : getAgama,
     getProv : getProv,
+    postKab : postKab,
+    postKec : postKec,
+    postDesKel : postDesKel,
     getProg : getProg,
     getPendidikan : getPendidikan,
     postPendidikanJurusan : postPendidikanJurusan,

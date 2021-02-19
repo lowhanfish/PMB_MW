@@ -29,6 +29,10 @@ const lolow = {
       URL_DM_master_kecamatan : URL + 'api/v1/master_kecamatan/',
       URL_DM_master_kabupaten : URL + 'api/v1/master_kabupaten/',
       URL_DM_master_provinsi : URL + 'api/v1/master_provinsi/',
+
+
+      URL_MAIN_verifikasi : URL + 'api/v1/verifikasi/',
+      URL_MAIN_laporanVerifikasi : URL + 'api/v1/laporanVerifikasi/',
     },
 
     btn : {
@@ -41,6 +45,12 @@ const lolow = {
     type : [
       {id : 0, uraian : 'Single Menu'},
       {id : 1, uraian : 'Multy Menu'}
+    ],
+
+    status : [
+      {id:1, uraian : 'Proses'},
+      {id:2, uraian : 'Diterima'},
+      {id:3, uraian : 'Dikembalikan'}
     ],
 
     datatampil : [10,25, 50, 100, 250, 500],

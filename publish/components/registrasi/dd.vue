@@ -52,6 +52,7 @@
             :items="list_prov"
             :item-text="'nama_provinsi'"
             :item-value="'provinsi_id'"
+            @input="asycKab()"
             label="7.Provinsi"
             clearable
             outlined
@@ -62,8 +63,9 @@
           <v-autocomplete v-model="form.kabupaten_id"
             class="placeholerku"
             :items="list_kab"
-            :item-text="'uraian'"
-            :item-value="'id'"
+            :item-text="'nama_kabupaten'"
+            :item-value="'kabupaten_id'"
+            @input="asycKec()"
             label="8.Kota/Kabupaten"
             clearable
             outlined
@@ -74,8 +76,9 @@
           <v-autocomplete v-model="form.kecamatan_id"
             class="placeholerku"
             :items="list_kec"
-            :item-text="'uraian'"
-            :item-value="'id'"
+            :item-text="'nama_kecamatan'"
+            :item-value="'kecamatan_id'"
+            @input="asycDesKel()"
             label="9.Kecamatan"
             clearable
             outlined
@@ -86,8 +89,8 @@
           <v-autocomplete v-model="form.des_kel_id"
             class="placeholerku"
             :items="list_des_kel"
-            :item-text="'uraian'"
-            :item-value="'id'"
+            :item-text="'nama_des_kel'"
+            :item-value="'des_kel_id'"
             label="10.Desa/Kelurahan"
             clearable
             outlined
@@ -102,7 +105,7 @@
         </v-col>
       </v-row>
     </v-card>
-    <v-btn color="light-green darken-2"  @click="next(4)">Save & Continue</v-btn>
+    <v-btn color="light-green darken-2"  @click="addDD()">Save & Continue</v-btn>
     <v-btn text @click="btnAdd(false)">Cancel</v-btn>
   </div>
 </template>
@@ -110,6 +113,7 @@
 <script>
 
 import FETCHING from "../../library/fetching";
+import UMUM from "../../library/UMUM";
 
 
 export default {
@@ -128,7 +132,7 @@ export default {
 
 
       form: {
-        reg_d4_dd_id : '',
+        reg_dd_id : '',
         nama : '',
         no_ktp : '',
         tpt_lahir : '',
@@ -148,16 +152,12 @@ export default {
         nama_des_kel : '',
         hp : '',
         tahun_id : 1,
-        // program_id : PROGRAM_ID,
         userId : '',
         gelombang_id : 0,
     },
 
-
-
-
     FETCHING : FETCHING,
-
+    UMUM : UMUM,
 
 
     }
@@ -166,24 +166,107 @@ export default {
 
   methods: {
 
+    getView : function(){
+        // this.$store.commit("shoWLoading");
+        fetch(this.$store.state.url.URL_publish_dd + "view", {
+            method: "POST",
+            headers: {
+            "content-type": "application/json",
+            authorization: "kikensbatara " + localStorage.token
+            },
+            body: JSON.stringify({
+                pb: this.$store.state.pb
+            })
+        })
+          .then(res => res.json())
+          .then(res_datax => {
 
+            console.log(res_datax)
+
+            if (res_datax.length > 0 ) {
+              var res_data = res_datax[0]
+              this.form = res_data;
+              this.asycKab();
+              this.asycKec();
+              this.asycDesKel();
+            } else {
+              this.form = {
+                reg_dd_id : '',
+                nama : '',
+                no_ktp : '',
+                tpt_lahir : '',
+                tgl_lahir : '',
+                jenis_kel_id : '',
+                agama_id : '',
+                hobby : '',
+                prodi_id : '',
+                alamat : '',
+                provinsi_id : '',
+                kabupaten_id : '',
+                kecamatan_id : '',
+                des_kel_id : '',
+                nama_provinsi : '',
+                nama_kabupaten : '',
+                nama_kecamatan : '',
+                nama_des_kel : '',
+                hp : '',
+                tahun_id : 1,
+                userId : '',
+                gelombang_id : 0,
+              };
+            }
+      });
+    },
+
+    addDD(){
+
+        fetch(this.$store.state.url.URL_publish_dd + 'addData', {
+            method: "POST",
+            headers: {
+                'content-type' : 'application/json',
+                authorization: "kikensbatara " + localStorage.token
+            },
+            body: JSON.stringify({
+              form : this.form,
+              pb : this.$store.state.pb
+            })
+            }).then(res_data => {
+                // this.alertku("success", "sukses menambah data");
+                // this.getDD();
+                this.getView();
+                this.next(4)
+        });
+    },
 
     next(data) {
       this.$store.commit('ubahStateReg', { name : 'el',  list : data});
     },
+
     btnAdd(data){
       this.$store.commit('ubahStateReg', { name : 'add_data',  list : data});
     },
+
     async asycFunc(){
       this.list_agama = await this.FETCHING.getAgama()
       this.list_kel = await this.FETCHING.getJenisKelamin()
       this.list_prov = await this.FETCHING.getProv()
 
-    }
+    },
+    async asycKab(){
+      this.list_kab = await this.FETCHING.postKab(this.form.provinsi_id)
+    },
+    async asycKec(){
+      this.list_kec = await this.FETCHING.postKec(this.form.kabupaten_id)
+    },
+    async asycDesKel(){
+      this.list_des_kel = await this.FETCHING.postDesKel(this.form.kecamatan_id)
+    },
+
   },
 
   mounted () {
     this.asycFunc();
+    this.getView();
   },
 }
 </script>

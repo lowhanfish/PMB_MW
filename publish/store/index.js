@@ -21,10 +21,10 @@ export const state = () => ({
       // URL_DM_master_tahun_studi : URL + 'api/v1/master_tahun_studi/',
 
       URL_publish_as : URL + 'api/v1/publish_as/',
+      URL_publish_jp : URL + 'api/v1/publish_jp/',
       URL_publish_bt : URL + 'api/v1/publish_bt/',
       URL_publish_dd : URL + 'api/v1/publish_dd/',
       URL_publish_fl : URL + 'api/v1/publish_fl/',
-      URL_publish_jp : URL + 'api/v1/publish_jp/',
       URL_publish_ot : URL + 'api/v1/publish_ot/',
 
       URL_DM_master_prodi : URL + 'api/v1/master_prodi/',

@@ -20,7 +20,7 @@
 
         <v-col cols="12" md="6" class="" v-for="data in list_prodi" :key="data.prodi_id" style="padding-left:2%">
           <!-- <v-checkbox v-model="form.id" :label="'Fak '+data.fakultas_uraian+'-'+data.master_prodi_uraian+ ' - ('+data.program_singkatan+')'" color="success" value="success" hide-details></v-checkbox> -->
-          <input type="checkbox" v-model="jpSelect" :value="data">
+          <input type="checkbox" v-model="jpSelect" :value="data" :disabled="statusPilihan">
           <label for="vehicle1" style="padding-left:5px">
             <span class="prodi_prodi">({{data.program_singkatan}}) {{data.master_prodi_uraian}}</span> <br>
             <span class="prodi_fakultas" style="padding-left:22px;">{{data.fakultas_uraian}}</span>
@@ -35,14 +35,22 @@
       <hr class="batasAbu">
       <br>
       <span>Prodi Pilihan ke - </span> <br>
-      <ol>
-        <li v-for="data in jpSelect" :key="data.prodi_id">
+      <ol style="padding-bottom:2%">
+        <li v-for="(data, index) in jpSelect" :key="data.prodi_id" style="padding-top:2%">
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn x-small depressed color="error" v-bind="attrs" v-on="on" @click="removeListJpSelect(index)">
+                X
+              </v-btn>
+            </template>
+            <span>Hapus Data Pilihan</span>
+          </v-tooltip>
           <span class="prodi_prodi">({{data.program_singkatan}}) {{data.master_prodi_uraian}}</span> -
           <span class="prodi_fakultas">{{data.fakultas_uraian}}</span>
         </li>
       </ol>
     </v-card>
-    <v-btn color="light-green darken-2" @click="addDD()">Save & Continue</v-btn>
+    <v-btn color="light-green darken-2" @click="addDD()" :disabled="statusValidForm">Save & Continue</v-btn>
     <v-btn text @click="btnAdd(false)">Cancel</v-btn>
   </div>
 </template>
@@ -87,7 +95,7 @@ export default {
 
     getView : function(){
         // this.$store.commit("shoWLoading");
-        fetch(this.$store.state.url.URL_publish_as + "view", {
+        fetch(this.$store.state.url.URL_publish_jp + "view", {
             method: "POST",
             headers: {
             "content-type": "application/json",
@@ -100,36 +108,40 @@ export default {
           .then(res => res.json())
           .then(res_datax => {
 
-            if (res_datax.length > 0 ) {
-              var res_data = res_datax[0]
-              this.form.reg_as_id = res_data.reg_as_id;
-              this.form.nama_sekolah = res_data.nama_sekolah;
-              this.form.nis = res_data.nis;
-              this.form.thn_lulus = res_data.thn_lulus;
-              this.form.pendidikan_id = res_data.pendidikan_id;
-              this.form.pendidikan_jurusan_id = res_data.pendidikan_jurusan_id;
-              this.form.nilai_un = res_data.nilai_un;
-              this.form.userId = res_data.userId;
-            } else {
-              this.form = {
-                reg_as_id : '',
-                nama_sekolah : '',
-                nis : '',
-                thn_lulus : '',
-                pendidikan_id : '',
-                pendidikan_jurusan_id : '',
-                pendidikan_jurusan_uraian : '',
-                nilai_un : '',
-                userId : '',
-              };
-            }
+            console.log(res_datax)
+
+            this.jpSelect = res_datax
+
+            // if (res_datax.length > 0 ) {
+            //   var res_data = res_datax[0]
+            //   this.form.reg_as_id = res_data.reg_as_id;
+            //   this.form.nama_sekolah = res_data.nama_sekolah;
+            //   this.form.nis = res_data.nis;
+            //   this.form.thn_lulus = res_data.thn_lulus;
+            //   this.form.pendidikan_id = res_data.pendidikan_id;
+            //   this.form.pendidikan_jurusan_id = res_data.pendidikan_jurusan_id;
+            //   this.form.nilai_un = res_data.nilai_un;
+            //   this.form.userId = res_data.userId;
+            // } else {
+            //   this.form = {
+            //     reg_as_id : '',
+            //     nama_sekolah : '',
+            //     nis : '',
+            //     thn_lulus : '',
+            //     pendidikan_id : '',
+            //     pendidikan_jurusan_id : '',
+            //     pendidikan_jurusan_uraian : '',
+            //     nilai_un : '',
+            //     userId : '',
+            //   };
+            // }
       });
     },
 
     addDD(){
 
       console.log(this.jpSelect)
-        fetch(this.$store.state.url.URL_publish_as + 'addData', {
+        fetch(this.$store.state.url.URL_publish_jp + 'addData', {
             method: "POST",
             headers: {
                 'content-type' : 'application/json',
@@ -143,7 +155,7 @@ export default {
                 // this.alertku("success", "sukses menambah data");
                 // this.getDD();
                 // this.getView();
-                // this.next(3)
+                this.next(3)
         });
     },
 
@@ -152,6 +164,10 @@ export default {
     },
     btnAdd(data){
       this.$store.commit('ubahStateReg', { name : 'add_data',  list : data});
+    },
+
+    removeListJpSelect(index){
+      this.jpSelect.splice(index, 1);
     },
 
     async asycFunc(){
@@ -166,8 +182,26 @@ export default {
 
   },
 
+
+  computed: {
+    statusPilihan() {
+      if (this.jpSelect.length >= 2) {
+        return true
+      } else {
+        return false
+      }
+    },
+    statusValidForm() {
+      if (this.jpSelect.length == 0) {
+        return true
+      } else {
+        return false
+      }
+    }
+  },
+
   mounted () {
-    // this.getView();
+    this.getView();
     this.asycFunc();
   },
 }

@@ -9,14 +9,22 @@ var upload = require('../../db/multer/pdf');
 var uniqid = require('uniqid');
 const router = express.Router();
 
+router.post('/view', (req, res) => {
+    var form =  req.body.pb
 
-
-router.get('/', (req, res) => {
+    // console.log(req.body)
 
     let query = `
-        SELECT
-        reg_as.*
-        FROM reg_as
+        SELECT 
+        reg_fl.*
+       
+        FROM reg_fl
+
+        WHERE 
+        reg_fl.userId = '`+req.user._id+`' AND 
+        reg_fl.tahun_id = `+form.tahun_id+` AND
+        reg_fl.gelombang_id = `+form.gelombang_id+`
+
     `
     db.query(query, (err, row)=>{
         if (err) {
@@ -25,75 +33,108 @@ router.get('/', (req, res) => {
             res.json(row)
         }
     })
+
 });
 
+router.post('/addFerify', (req,res)=>{
 
+    query = `
+    UPDATE reg_fl SET
+    stat_pembayaran = 1,
+    keterangan = 'Menunggu Proses Pemeriksaan'
+    WHERE reg_fl_id = `+req.body.reg_fl_id+`
+    `;
+    db.query(query, (err, row)=>{
+        if(err) {
+            console.log(err);
+            res.send(err);
+        }else{
+            hapus_file(req.body.fileOld)
+            res.send(row);
+        }
+    })
 
+    // res.send('OK')
+});
 
-
-// router.post('/addData', (req,res)=>{
 router.post('/addData',upload.single("file"), (req,res)=>{
-     let insert = `INSERT INTO reg_as (uraian)
+    var pb = JSON.parse(req.body.pb)
+    
+    var query = `
+    SELECT * FROM reg_fl
+    WHERE (tahun_id = `+pb.tahun_id+` AND gelombang_id = `+pb.gelombang_id+`) AND userId = '`+req.user._id+`'
+    `;
+
+    db.query(query, (err, row)=>{
+        if (err) {
+            console.log(err)
+            res.send(err)
+        } else {
+            if(row.length <= 0) {
+                addData(req,res)
+            }else{
+                console.log("editmi")
+                // res.send("OK")
+                editData(req,res)
+            }
+        }
+    })
+
+    // res.send('OK')
+});
+
+function addData(req,res){
+    var pb = JSON.parse(req.body.pb)
+    var file = req.file
+
+    console.log(pb)
+
+     let insert = `INSERT INTO reg_fl (`+req.body.field+`, tahun_id, gelombang_id, userId, createdAt)
     VALUES (
-        '`+req.body.uraian+`'
+        '`+file.filename+`',
+        `+pb.tahun_id+`,
+        `+pb.gelombang_id+`,
+        '`+req.user._id+`',
+        NOW()
         )
     `
-
     db.query(insert, (err, row)=>{
         if(err) {
             console.log('errrrooorrr');
             console.log(err);
             res.send(err);
         }else{
-            console.log(row);
+            // console.log(row);
             res.send(row);
         }
     })
-    // console.log(req.body);
-});
+}
 
-router.post('/editData',upload.single("file"), (req,res)=>{
+function editData(req,res){
+    var pb = JSON.parse(req.body.pb)
+    var file = req.file
+
+
     query = `
-    UPDATE reg_as SET
-    uraian = '`+req.body.uraian+`'
-
-    WHERE agama_id = '`+req.body.agama_id+`'
+    UPDATE reg_fl SET
+    `+req.body.field+` = '`+file.filename+`'
+    WHERE reg_fl_id = `+req.body.reg_fl_id+`
     `;
     db.query(query, (err, row)=>{
         if(err) {
             console.log(err);
             res.send(err);
         }else{
+            hapus_file(req.body.fileOld)
             res.send(row);
         }
     })
+}
 
 
-    // console.log(req.body);
-
-
-    // console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
-})
-
-
-router.post('/removeData', (req, res)=> {
-    var file = req.body.file
-    hapus_file(file);
-
-    var query = `
-        DELETE FROM reg_as WHERE agama_id = `+req.body.id+`;
-    `;
-    db.query(query, (err, row)=>{
-        if(err){
-            res.send(err);
-        }else{
-            res.send(row);
-        }
-    });
-})
 
 function hapus_file(file){
-    const path = 'uploads/'+file;
+    const path = './uploads/'+file;
 
     fs.unlink(path, (err) => {
         if (err) {

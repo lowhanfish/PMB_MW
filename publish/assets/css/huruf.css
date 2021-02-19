@@ -131,6 +131,12 @@ a:link {
   color: #7e7e7e;
 }
 
+.h_allertku{
+  font-size: 18px;
+  color: #b34f4f;
+  font-weight: 600;
+}
+
 
 
 @media only screen and (max-width: 1375px) {
@@ -154,6 +160,11 @@ a:link {
   .h_title_judul_kuning{
     font-size: 18pt;
   }
+
+  .h_allertku{
+    font-size: 16px;
+  }
+
 
 
 
@@ -183,6 +194,11 @@ a:link {
     font-size: 16pt;
   }
 
+  .h_allertku{
+    font-size: 14px;
+  }
+
+
 
 }
 
@@ -200,6 +216,12 @@ a:link {
   .f_pengantar{
     font-size: 8pt;
   }
+
+  .h_allertku{
+    font-size: 12px;
+  }
+
+
 
 }
 

@@ -12,7 +12,8 @@
     "@nuxtjs/pwa": "^3.3.4",
     "core-js": "^3.8.2",
     "nuxt": "^2.14.12",
-    "vue-google-login": "^2.0.5"
+    "vue-google-login": "^2.0.5",
+    "vue-pdf": "^4.2.0"
   },
   "devDependencies": {
     "@nuxtjs/vuetify": "^1.11.3",

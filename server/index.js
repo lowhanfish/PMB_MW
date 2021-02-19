@@ -92,6 +92,11 @@ app.use('/checkAuth', middleware.isLoggedIn, checkAuth);
     app.use('/api/v1/master_kabupaten', middleware.isLoggedIn, master_kabupaten);
     const master_provinsi = require('./apiMysql/dataMaster/wilayah/master_provinsi');
     app.use('/api/v1/master_provinsi', middleware.isLoggedIn, master_provinsi);
+
+    const verifikasi = require('./apiMysql/mainPMB/verifikasi');
+    app.use('/api/v1/verifikasi', middleware.isLoggedIn, verifikasi);
+    const laporanVerifikasi = require('./apiMysql/mainPMB/laporanVerifikasi');
+    app.use('/api/v1/laporanVerifikasi', middleware.isLoggedIn, laporanVerifikasi);
     // END MAIN SERVER
 
 

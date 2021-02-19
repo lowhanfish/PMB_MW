@@ -38,6 +38,7 @@ export default {
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
     '~plugins/bl-components',
+    // { src: '~/plugins/vue-pdf.js', mode: 'client' },
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -83,5 +84,9 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
-  }
+    vendor: ['vue-pdf'],
+    extend(config, ctx) {
+        config.output.globalObject = 'this'
+    }
+  },
 }
