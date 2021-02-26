@@ -2,6 +2,13 @@
 // var URL = 'https://dokumentasi.suara2020.com/';
 
 var URL = 'http://localhost:5014/';
+// var URL = 'https://report.univ-mw.com/'
+
+var PARAMS = {
+  client_id: "125938679529-kt7jhdavukuftahm8f3gaee8f98d6v4h.apps.googleusercontent.com" // Offline
+  // client_id: "125938679529-9r1nkp6c6g2ugqcegatt8g9pqn4blups.apps.googleusercontent.com" // Online
+  // client_id: "125938679529-9r1nkp6c6g2ugqcegatt8g9pqn4blups.apps.googleusercontent.com" // With IP
+};
 
 var d = new Date();
 var thn = d.getFullYear();
@@ -39,7 +46,12 @@ export const state = () => ({
       URL_DM_master_kabupaten : URL + 'api/v1/master_kabupaten/',
       URL_DM_master_kecamatan : URL + 'api/v1/master_kecamatan/',
       URL_DM_master_des_kel : URL + 'api/v1/master_des_kel/',
+
+      URL_PUBLISH_publishDokPersiapan : URL + 'api/v1/publishDokPersiapan/',
+      URL_PUBLISH_publishDokInfografisFak : URL + 'api/v1/publishDokInfografisFak/',
     },
+
+    params: PARAMS,
 
     reg : {
       add_data : false,
@@ -57,7 +69,8 @@ export const state = () => ({
       gelombang_id : 1,
       pendidikan_id : '',
       pendidikan_jurusan_id : '',
-    }
+    },
+    statusLogin : false,
 
 })
 

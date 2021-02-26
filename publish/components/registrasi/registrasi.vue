@@ -44,55 +44,75 @@
               </v-col>
 
             </v-row>
-            <hr class="batasAbu"  style="margin-top:-20px">
-            <br><br>
-            <v-stepper v-model="$store.state.reg.el" style="margin-top:-20px">
-              <v-stepper-header>
-                <v-stepper-step
-                  @click="next(1)"
-                  :complete="$store.state.reg.el > 1"
-                  step="1"
-                >Asal Sekolah</v-stepper-step>
-                <v-divider></v-divider>
-                <v-stepper-step
-                  @click="next(2)"
-                  :complete="$store.state.reg.el > 2"
-                  step="2"
-                >Jurusan Peminatan</v-stepper-step>
-                <v-divider></v-divider>
-                <v-stepper-step
-                  @click="next(3)"
-                  :complete="$store.state.reg.el > 3"
-                  step="3"
-                >Identitas Diri</v-stepper-step>
-                <v-divider></v-divider>
-                <v-stepper-step
-                  @click="next(4)"
-                  :complete="$store.state.reg.el > 4"
-                  step="4"
-                >Identitas Org Tua/Wali</v-stepper-step>
-                <v-divider></v-divider>
-                <v-stepper-step @click="next(5)" step="5">Lampiran dan Bukti transfer</v-stepper-step>
-              </v-stepper-header>
+            <div v-if="checkObjFl" :style="'margin-top:-20px; color :' +UMUM.color(obj_fl.stat_pembayaran) ">
+              <span><b>Catatan : </b> </span><span class="h_catatan"><i>{{obj_fl.keterangan}}</i></span>
+              <br><br>
+            </div>
+            <hr class="batasAbu" style="margin-top:-20px">
+            <br>
+            <div class="text-center"  id="downloader" :style="'display: '+downloader">
 
-              <v-stepper-items>
-                <v-stepper-content step="1">
-                  <compAS ref='compAS' v-if="$store.state.reg.el == 1"/>
-                </v-stepper-content>
-                 <v-stepper-content step="2">
-                  <compJP ref='compJP' v-if="$store.state.reg.el == 2"/>
-                </v-stepper-content>
-                <v-stepper-content step="3">
-                  <compDD ref='compDD' v-if="$store.state.reg.el == 3"/>
-                </v-stepper-content>
-                <v-stepper-content step="4">
-                  <compOT ref='compOT' v-if="$store.state.reg.el == 4"/>
-                </v-stepper-content>
-                <v-stepper-content step="5">
-                  <compBL ref='compBL' v-if="$store.state.reg.el == 5"/>
-                </v-stepper-content>
-              </v-stepper-items>
-            </v-stepper>
+              <v-btn color="blue-grey" class="ma-2 white--text" @click="hreff('generateReport')">
+                Download Formulir
+                <v-icon right dark>mdi-cloud-download</v-icon>
+              </v-btn>
+
+              <v-btn color="blue-grey" class="ma-2 white--text" @click="hreff('generateCard')">
+                Download Kartu Ujian
+                <v-icon right dark>mdi-cloud-download</v-icon>
+              </v-btn>
+
+            </div>
+            <br>
+            <div id="nonDownloader" :style="'display: '+nonDownloader">
+              <v-stepper v-model="$store.state.reg.el" style="margin-top:-20px">
+                <v-stepper-header>
+                  <v-stepper-step
+                    @click="next(1)"
+                    :complete="$store.state.reg.el > 1"
+                    step="1"
+                  >Asal Sekolah</v-stepper-step>
+                  <v-divider></v-divider>
+                  <v-stepper-step
+                    @click="next(2)"
+                    :complete="$store.state.reg.el > 2"
+                    step="2"
+                  >Jurusan Peminatan</v-stepper-step>
+                  <v-divider></v-divider>
+                  <v-stepper-step
+                    @click="next(3)"
+                    :complete="$store.state.reg.el > 3"
+                    step="3"
+                  >Identitas Diri</v-stepper-step>
+                  <v-divider></v-divider>
+                  <v-stepper-step
+                    @click="next(4)"
+                    :complete="$store.state.reg.el > 4"
+                    step="4"
+                  >Identitas Org Tua/Wali</v-stepper-step>
+                  <v-divider></v-divider>
+                  <v-stepper-step @click="next(5)" step="5">Lampiran dan Bukti transfer</v-stepper-step>
+                </v-stepper-header>
+
+                <v-stepper-items>
+                  <v-stepper-content step="1">
+                    <compAS ref='compAS' v-if="$store.state.reg.el == 1"/>
+                  </v-stepper-content>
+                  <v-stepper-content step="2">
+                    <compJP ref='compJP' v-if="$store.state.reg.el == 2"/>
+                  </v-stepper-content>
+                  <v-stepper-content step="3">
+                    <compDD ref='compDD' v-if="$store.state.reg.el == 3"/>
+                  </v-stepper-content>
+                  <v-stepper-content step="4">
+                    <compOT ref='compOT' v-if="$store.state.reg.el == 4"/>
+                  </v-stepper-content>
+                  <v-stepper-content step="5">
+                    <compBL ref='compBL' v-if="$store.state.reg.el == 5"/>
+                  </v-stepper-content>
+                </v-stepper-items>
+              </v-stepper>
+            </div>
           </v-container>
         </v-card-text>
       </v-card>
@@ -143,6 +163,7 @@
 
 import GoogleLogin from 'vue-google-login';
 import FETCHING from "../../library/fetching";
+import UMUM from "../../library/UMUM";
 
 
 
@@ -159,12 +180,21 @@ export default {
       list_gelombang : [],
       tahun_id : this.$store.state.pb.tahun_id,
       list_tahun : [],
+      obj_fl : null,
+      checkObjFl : false,
 
 
       mdl_login : false,
-      params: {
-          client_id: "125938679529-kt7jhdavukuftahm8f3gaee8f98d6v4h.apps.googleusercontent.com" // local
-          // client_id: "" // server
+      params: this.$store.state.params,
+
+      form : {
+        reg_fl_id : '',
+        foto : '',
+        ijazah : '',
+        transkrip : '',
+        bukti_transfer : '',
+        keterangan : '',
+        stat_pembayaran : '',
       },
 
       renderParams: {
@@ -173,8 +203,11 @@ export default {
           longtitle: true
       },
       loadingFetch : false,
+      downloader : 'node',
+      nonDownloader : 'block',
 
       FETCHING : FETCHING,
+      UMUM : UMUM,
     }
   },
 
@@ -183,19 +216,15 @@ export default {
       this.$store.commit('ubahStateReg', { name : 'el',  list : data});
     },
     btnAdd(data){
-
       if (localStorage.token) {
-        console.log("ada")
+        // console.log("ada")
         this.$store.commit('ubahStateReg', { name : 'add_data',  list : data});
         this.mdl_login = false
       } else {
-        console.log("Tidak ada")
+        // console.log("Tidak ada")
         this.$store.commit('ubahStateReg', { name : 'add_data',  list : !data});
         this.mdl_login = true
       }
-
-
-
     },
 
     onSuccess(googleUser) {
@@ -239,6 +268,7 @@ export default {
           // LOGIN SUKSES, LAKUKAN SESUATU..!!
           if (localStorage.token) {
             this.$store.commit('ubahStateReg', { name : 'add_data',  list : true});
+             this.checkCatatan()
             this.mdl_login = false
           } else {
             this.$store.commit('ubahStateReg', { name : 'add_data',  list : false});
@@ -260,15 +290,82 @@ export default {
     onFailure(){
       console.log('gagal')
     },
-    setData(data, parameter){
+
+    async setData(data, parameter){
       this.$store.commit('ubahStatePB', { name : parameter,  valx : data});
-      this.tessaja()
+      this.tessaja();
+      this.checkCatatan();
+
     },
 
     async asycFunc(){
       this.list_gelombang = await this.FETCHING.getGelombang();
       this.list_tahun = await this.FETCHING.getTahun()
+      this.checkCatatan();
     },
+
+    async checkCatatan(){
+      var fl = await this.FETCHING.postRegFl(this.tahun_id, this.gelombang_id);
+
+      if (fl.message == 'Tidak ter-Authorisasi') {
+        this.$store.commit('ubahState', { name : 'statusLogin',  list : false});
+        localStorage.removeItem("token");
+        localStorage.removeItem("profile");
+
+      } else {
+        this.$store.commit('ubahState', { name : 'statusLogin',  list : true});
+        if (fl == undefined || fl == null || fl == '') {
+          this.checkObjFl = false;
+          this.downloader = "none";
+          this.nonDownloader = "block";
+          // console.log("Tidak ada")
+        } else {
+          this.obj_fl = fl[0];
+          if (this.obj_fl.stat_pembayaran == 0) {
+            this.checkObjFl = false;
+          } else {
+            this.checkObjFl = true;
+          }
+
+          if (this.obj_fl.stat_pembayaran == 2) {
+              this.downloader = "block";
+              this.nonDownloader = "none";
+          } else {
+              this.downloader = "none";
+              this.nonDownloader = "block";
+          }
+        }
+      }
+
+
+
+    },
+
+
+    hreff(data){
+
+      var profile = JSON.parse(localStorage.profile);
+      var gelombang_id = this.$store.state.pb.gelombang_id;
+      var tahun_id = this.$store.state.pb.tahun_id;
+
+      var userId = profile._id
+
+
+
+      console.log(gelombang_id)
+
+
+      window.open(
+        // 'http://localhost:5014/kartu/generateReport?gelombang_id=2&tahun_id=2021&userId=i33wt8iskl54ta7i',
+        this.$store.state.URLX+'kartu/'+data+'?gelombang_id='+gelombang_id+'&tahun_id='+tahun_id+'&userId='+userId,
+        '_blank'
+      );
+
+
+
+    },
+
+
 
 
     tessaja(){
@@ -282,10 +379,13 @@ export default {
   },
 
   mounted () {
+
+
     var d = new Date();
     var thn = d.getFullYear();
     this.tahun_id =thn
     this.asycFunc();
+
   },
 
 

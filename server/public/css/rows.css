@@ -1,0 +1,53 @@
+.rows {
+    width: 100%;
+    /* grid-template-columns: auto auto auto auto;
+    grid-template-rows: 100px 300px;
+    grid-gap: 10px;
+    background-color: #2196F3;
+    padding: 10px; */
+}
+
+.divRows1 {
+    width: 1%;
+    float: left;
+}
+
+.divRows2 {
+    width: 2%;
+    float: left;
+}
+
+.divRows5 {
+    width: 5%;
+    float: left;
+}
+
+.divRows10 {
+    width: 10%;
+    float: left;
+}
+
+.divRows20 {
+    width: 20%;
+    float: left;
+}
+
+.divRows30 {
+    width: 30%;
+    float: left;
+}
+
+.divRows40 {
+    width: 40%;
+    float: left;
+}
+
+.divRows45 {
+    width: 45%;
+    float: left;
+}
+
+.divRows49 {
+    width: 49%;
+    float: left;
+}

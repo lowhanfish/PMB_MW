@@ -36,6 +36,10 @@ hr.batasAbu {
   border-top: 15px solid #e2e2e2;
 }
 
+hr.batasAbu1 {
+  border-top: 7px solid #e2e2e2;
+}
+
 hr.batasPrimary{
   border-top: 10px solid rgba(0, 94, 255, 0.2)
 }

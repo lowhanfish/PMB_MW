@@ -1,6 +1,8 @@
 <template>
   <div>
     <br />
+
+    <!-- <pre>data : {{minat_Wilayah}}</pre> -->
     <hr class="batasAbu" />
     <v-card class="cardContent">
       <v-row>
@@ -11,9 +13,9 @@
                 <v-icon style="color:white; font-size:45px">mdi-chart-bar</v-icon>
               </v-col>
               <v-col cols="9" class="roundRight" style="background:#AFCF63">
-                <span class="HomeBarTitle">Jumlah Kontent</span>
+                <span class="HomeBarTitle">Jumlah Pendaftar</span>
                 <br />
-                <span class="HomeBarSubTitle">54</span>
+                <span class="HomeBarSubTitle">{{registrator.pendaftar}}</span>
               </v-col>
             </v-row>
           </div>
@@ -26,9 +28,9 @@
                 <v-icon style="color:white; font-size:45px">mdi-account</v-icon>
               </v-col>
               <v-col cols="9" class="roundRight" style="background:#63CFB9">
-                <span class="HomeBarTitle">Jumlah Kontent</span>
+                <span class="HomeBarTitle">Jumlah Proses</span>
                 <br />
-                <span class="HomeBarSubTitle">54</span>
+                <span class="HomeBarSubTitle">{{registrator.proses}}</span>
               </v-col>
             </v-row>
           </div>
@@ -41,9 +43,9 @@
                 <v-icon style="color:white; font-size:45px">mdi-alert-circle</v-icon>
               </v-col>
               <v-col cols="9" class="roundRight" style="background:#8363CF">
-                <span class="HomeBarTitle">Jumlah Kontent</span>
+                <span class="HomeBarTitle">Jumlah Diterima</span>
                 <br />
-                <span class="HomeBarSubTitle">54</span>
+                <span class="HomeBarSubTitle">{{registrator.diterima}}</span>
               </v-col>
             </v-row>
           </div>
@@ -56,33 +58,73 @@
                 <v-icon style="color:white; font-size:45px">mdi-clipboard-alert</v-icon>
               </v-col>
               <v-col cols="9" class="roundRight" style="background:#CF6379">
-                <span class="HomeBarTitle">Jumlah Kontent</span>
+                <span class="HomeBarTitle">Jumlah Dikembalikan</span>
                 <br />
-                <span class="HomeBarSubTitle">54</span>
+                <span class="HomeBarSubTitle">{{registrator.dikembalikan}}</span>
               </v-col>
             </v-row>
           </div>
         </v-col>
       </v-row>
       <br />
+
       <hr class="batasAbu" />
       <br>
+      <v-row  no-gutters>
+        <v-col cols="12" md="6" class="row_filter">
+          <v-autocomplete
+            v-model="filter.tahun_id"
+            :items="list_tahun"
+            :item-text="'uraian'"
+            :item-value="'tahun_id'"
+            label="Filter Tahun"
+            @input="viewAll()"
+            outlined
+            dense
+          />
+        </v-col>
+        <v-col cols="12" md="6" class="row_filter">
+          <v-autocomplete
+            v-model="filter.gelombang_id"
+            :items="list_gelombang"
+            :item-text="'uraian'"
+            :item-value="'gelombang_id'"
+            label="Filter Gelombang"
+            @input="viewAll()"
+            outlined
+            dense
+          />
+        </v-col>
+      </v-row>
 
       <v-row>
         <v-col cols="12" md="6">
-          <div id="chart1"></div>
+          <div id="j_jenis_kelamin"></div>
+        </v-col>
+        <v-col cols="12" md="6">
+          <div id="j_jenis_kelamin_jurusan"></div>
         </v-col>
 
         <v-col cols="12" md="6">
-          <div id="pieChart1"></div>
+          <div id="j_pendapatan_ot"></div>
         </v-col>
+
+        <v-col cols="12" md="6">
+          <div id="j_minat_jurusan"></div>
+        </v-col>
+
+        <v-col cols="12" md="12">
+          <hr class="batasAbu" /> <br>
+          <div id="j_minat_daerah"></div>
+        </v-col>
+
       </v-row>
 
         <br>
        <hr class="batasAbu" />
        <br>
 
-      <div>
+      <!-- <div>
         <v-simple-table style="width:100%">
           <template v-slot:default>
             <thead  style="background:#5289E7">
@@ -132,7 +174,7 @@
             </tbody>
           </template>
         </v-simple-table>
-      </div>
+      </div> -->
 
     </v-card>
   </div>
@@ -142,6 +184,11 @@
 import Logo from '~/components/Logo.vue'
 import VuetifyLogo from '~/components/VuetifyLogo.vue'
 
+
+import FETCHING from "../library/fetching";
+import UMUM from "../library/umum.js";
+import CHARTKU from "../library/chartku";
+
 export default {
   components: {
     Logo,
@@ -149,106 +196,107 @@ export default {
   },
   data() {
     return {
-      key: ''
+      FETCHING : FETCHING,
+      UMUM : UMUM,
+      CHARTKU : CHARTKU,
+      key: '',
+
+      filter : {
+        tahun_id : '',
+        gelombang_id : '',
+      },
+      list_tahun : [],
+      list_gelombang : [],
+
+      registrator : {
+        pendaftar : '',
+        proses : '',
+        diterima : '',
+        dikembalikan : '',
+      },
+
+      JK : [],
+      pendapatanOT : [],
+      JK_Jurusan : [],
+      minat_Jurusan : [],
+      minat_Wilayah : [],
     }
   },
 
   methods: {
 
-    chart1(chartku) {
-      const chart = Highcharts.chart(chartku, {
-          chart: {
-              borderColor: '#efefef',
-              borderWidth: 2,
-          },
-          title: {
-              text: 'Ini title Data 1'
-          },
-          subtitle: {
-              text: 'dan ini subtitlenya'
-          },
-          xAxis: {
-              categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-          },
-          series: [{
-              type: 'column',
-              colorByPoint: true,
-              data: [29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4],
-              showInLegend: false
-          }]
-      });
+    async getRegistrator(){
+      this.registrator = await this.CHARTKU.postDashboard(this.filter.gelombang_id, this.filter.tahun_id, 'registrator');
+      // console.log(this.registrator)
+    },
+
+
+    async j_jenis_kelamin(){
+
+      this.JK = await this.CHARTKU.postDashboard(this.filter.gelombang_id, this.filter.tahun_id, 'JK');
+
+      var idnya = 'j_jenis_kelamin';
+      var title = 'JUMLAH BERDASARKAN JENIS KELAMIN'
+      this.CHARTKU.pieChart(idnya, title, this.JK)
+    },
+
+    async j_jenis_kelamin_jurusan() {
+       this.JK_Jurusan = await this.CHARTKU.postDashboard(this.filter.gelombang_id, this.filter.tahun_id, 'j_jenis_kelamin');
+      var idnya = 'j_jenis_kelamin_jurusan';
+      var title = 'JUMLAH BERDASARKAN JENIS KELAMIN / JURUSAN'
+      CHARTKU.stackChart(idnya, title, this.JK_Jurusan.categories, this.JK_Jurusan.M1, this.JK_Jurusan.M2, this.JK_Jurusan.F1, this.JK_Jurusan.F2)
 
 
     },
 
-    pieChart1(datax){
 
-      // Build the chart
-      Highcharts.chart(datax, {
-          chart: {
-              plotBackgroundColor: null,
-              plotBorderWidth: null,
-              plotShadow: false,
-              borderColor: '#efefef',
-              borderWidth: 2,
-              type: 'pie'
-          },
-          title: {
-              text: 'Browser market shares in January, 2018'
-          },
-          tooltip: {
-              pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-          },
-          accessibility: {
-              point: {
-                  valueSuffix: '%'
-              }
-          },
-          plotOptions: {
-              pie: {
-                  allowPointSelect: true,
-                  cursor: 'pointer',
-                  dataLabels: {
-                      enabled: false
-                  },
-                  showInLegend: true
-              }
-          },
-          series: [{
-              name: 'Brands',
-              colorByPoint: true,
-              data: [{
-                  name: 'Chrome',
-                  y: 61.41,
-                  sliced: true,
-                  selected: true
-              }, {
-                  name: 'Internet Explorer',
-                  y: 11.84
-              }, {
-                  name: 'Firefox',
-                  y: 10.85
-              }, {
-                  name: 'Edge',
-                  y: 4.67
-              }, {
-                  name: 'Safari',
-                  y: 4.18
-              }, {
-                  name: 'Other',
-                  y: 7.05
-              }]
-          }]
-      });
+    async j_pendapatan_ot(){
+      this.pendapatanOT = await this.CHARTKU.postDashboard(this.filter.gelombang_id, this.filter.tahun_id, 'pendapatanOrangTua');
+      var idnya = 'j_pendapatan_ot';
+      var title = 'JUMLAH BERDASARKAN PENDAPATAN ORANG-TUA'
+      CHARTKU.barChart(idnya, title, this.pendapatanOT.categories, this.pendapatanOT.data)
+    },
 
+    async j_minat_jurusan(){
+
+      this.minat_Jurusan = await this.CHARTKU.postDashboard(this.filter.gelombang_id, this.filter.tahun_id, 'j_minat_jurusan');
+
+      // console.log(this.minat_Jurusan )
+
+      var idnya = 'j_minat_jurusan';
+      var title = 'PRESENTASE BERDASARKAN MINAT JURUSAN (%)'
+      CHARTKU.pieChart(idnya, title, this.minat_Jurusan)
+
+    },
+
+    async j_minat_daerah(){
+      this.minat_Wilayah = await this.CHARTKU.postDashboard(this.filter.gelombang_id, this.filter.tahun_id, 'j_minat_daerah');
+      var idnya = 'j_minat_daerah';
+      var title = 'JUMLAH PENDAFTAR BERDASARKAN WILAYAH'
+      CHARTKU.barChart(idnya, title, this.minat_Wilayah.categories, this.minat_Wilayah.data)
+    },
+
+    funcAwait : async function(){
+      this.list_tahun = await this.FETCHING.getTahun();
+      this.list_gelombang = await this.FETCHING.getGelombang();
+    },
+
+
+    viewAll(){
+      this.getRegistrator();
+      this.j_jenis_kelamin_jurusan();
+      this.j_jenis_kelamin();
+      this.j_pendapatan_ot();
+      this.j_minat_jurusan();
+      this.j_minat_daerah();
     }
 
 
   },
 
   mounted () {
-    this.chart1('chart1');
-    this.pieChart1('pieChart1');
+    this.funcAwait();
+    this.viewAll()
   },
 }
 </script>

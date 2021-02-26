@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kartu Ujian</title>
+    <link rel="stylesheet" href="/css/huruf.css">
+    <link rel="stylesheet" href="/css/kiken.css">
+    <link rel="stylesheet" href="/css/rows.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <table class="mytable" style="width: 100%;">
+        <tbody class="t_body">
+            <tr>
+                <td style="width: 49%; padding:5px">
+                    <div class="borderCard">
+                        <div>
+                            <table style="width:100%" class="mytable">
+                                <tbody class="t_body">
+                                    <tr>
+                                        <td class="topku">
+                                            <img src="/img/logo_mw.png" width="65px" alt />
+                                        </td>
+                                        <td class="text-center">
+                                            <div style="margin-left:-22%">
+                                                <span class="kop2">YAYASAN MANDALA WALUYA KENDARI</span>
+                                                <br />
+                                                <span class="kop1">UNIVERSITAS MANDALA WALUYA (UMW)</span>
+                                                <br />
+                                                <span class="kop2">SELEKSI PENERIMAAN MAHASISWA BARU</span>
+                                                <br />
+                                                <span class="kop4">TAHUN AKADEMIK 2021/2022</span>
+                                            </div>
+                                        </td>
+                                        <td class="topku"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <hr class="batasAbu1">
+                            <div  class="text-center">
+                                <span class="kop2">KARTU PESERTA UJIAN</span>
+                                <br><br>
+                            </div>
+
+
+
+                            <table class="mytable" width="100%">
+                                <tbody class="t_body">
+                                    <tr>
+                                        <td width="35%"><span class="kop5"><strong>NOMOR PESERTA</strong></span></td>
+                                        <td width="5%">:</td>
+                                        <td class="kop5 topku"><%= noUrut(data.reg_fl_id) %></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="topku"><span class="kop5"><strong>NAMA</strong></span></td>
+                                        <td class="topku">:</td>
+                                        <td class="kop5 topku upper"><strong><%= data.nama %></strong></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="topku"><span class="kop5">NOMOR KTP</span></td>
+                                        <td class="topku">:</td>
+                                        <td class="kop5 topku upper"><%= data.no_ktp %></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="topku"><span class="kop5">JENIS KELAMIN</span></td>
+                                        <td class="topku">:</td>
+                                        <td class="kop5 topku"><%= data.master_jenis_kel_uraian %></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="topku"><span class="kop5">TEMPAT, TANGGAL LAHIR</span></td>
+                                        <td class="topku">:</td>
+                                        <td class="kop5 topku"><span class="upper"><%= data.tpt_lahir %> </span>, <%= convertDate(data.tgl_lahir) %></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="topku"><span class="kop5">NO. HANDPONE (HP)</span></td>
+                                        <td class="topku">:</td>
+                                        <td class="kop5 topku"><%= data.hp %></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="topku"><span class="kop5">ALAMAT EMAIL</span></td>
+                                        <td class="topku">:</td>
+                                        <td class="kop5 topku"><%= data.email %> <br><br></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="topku"><span class="kop5"><strong>LOKASI UJIAN</strong></span></td>
+                                        <td class="topku">:</td>
+                                        <td class="kop5 topku"><strong>UNIVERSITAS MANDALA WALUYA</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="topku"><span class="kop5">ALAMAT KAMPUS</span></td>
+                                        <td class="topku">:</td>
+                                        <td class="kop5 topku">Jl. Jend. A.H. Nasution No. G-37 Kambu <br> Kec. Poasia Kota Kendari Prov. Sultra</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="topku"><span class="kop5">PERIODE PENDAFTARAN</span></td>
+                                        <td class="topku">:</td>
+                                        <td class="kop5 topku">TA. 2021/2022 GELOMBANG I (PERTAMA)
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="topku"><span class="kop5">PRODI PILIHAN</span></td>
+                                        <td class="topku">:</td>
+                                        <td class="kop6 topku">
+                                            <% jp.forEach(el => { %>
+                                            <span class="upper"><%= el.pilihan %>. (<%= el.program %>) <%= el.program_studi %> - <%= el.fakultas %> </span>
+                                            <br />
+                                            <% }) %>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="topku"><span class="kop5">JADWAL UJIAN</span></td>
+                                        <td class="topku">:</td>
+                                        <td class="kop5 topku"><strong>29 JUNI 2021 PUKUL 09.00 s/d 11.00 WITA</strong></td>
+                                    </tr>
+
+
+                                </tbody>
+                            </table>
+
+
+                            <br>
+                            <table class="mytable" width="100%">
+                                <tbody class="t_body">
+                                    <tr>
+                                        <td width="60%">
+                                            <span class="kop6">
+                                                <strong>Keterangan :</strong> <br>
+                                                <i>
+                                                    Peserta Ujian wajib membawa pulpen/pensil, penghapus <br>
+                                                pakaian rapi (kemeja, celana/rok kain), memakai sepatu
+                                                </i>
+                                            </span>
+                                        </td>
+                                        <td width="20%" class="borderCard1">
+                                            <div style="padding:7%">
+                                                <img style="width:100%" src="<%= URLX %>uploads/<%= data.foto %>" alt="">
+                                            </div>
+                                        </td>
+                                        <td width="20%" class="text-center borderCard1">
+                                            <div class="">
+                                                <span class="kop8">Tanda Tangan<br>di sini</span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                           
+                            <div class="text-center">
+                                <span class="kop7">*Peserta dimohon survey Ruangan Ujian 1 hari sebelum pelaksanaan Ujian</span>
+                            </div>
+                           
+
+
+
+
+                        </div>
+                    </div>
+
+
+
+
+                </td>
+                <!-- ------------------------------ PEMISAH ---------------------------------------- -->
+                <td style="width: 2%;" class="text-center">
+                    <img src="/img/cutter.png" alt="" style="width: 15px; opacity: 0.5;">
+                    <!-- <div class="vertical_line"></div> -->
+                </td>
+                <!-- ------------------------------ PEMISAH ---------------------------------------- -->
+                <td style="width: 49%; padding:5px">
+                    <div class="borderCard">
+                        <div>
+                            <table style="width:100%" class="mytable">
+                                <tbody class="t_body">
+                                    <tr>
+                                        <td class="topku">
+                                            <img src="/img/logo_mw.png" width="65px" alt />
+                                        </td>
+                                        <td class="text-center">
+                                            <div style="margin-left:-22%">
+                                                <span class="kop2">YAYASAN MANDALA WALUYA KENDARI</span>
+                                                <br />
+                                                <span class="kop1">UNIVERSITAS MANDALA WALUYA (UMW)</span>
+                                                <br />
+                                                <span class="kop2">SELEKSI PENERIMAAN MAHASISWA BARU</span>
+                                                <br />
+                                                <span class="kop4">TAHUN AKADEMIK 2021/2022</span>
+                                            </div>
+                                        </td>
+                                        <td class="topku"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <hr class="batasAbu1">
+                            <div  class="text-center">
+                                <span class="kop2">KARTU PESERTA UJIAN</span>
+                                <br><br>
+                            </div>
+
+
+
+                            <table class="mytable" width="100%">
+                                <tbody class="t_body">
+                                    <tr>
+                                        <td width="35%"><span class="kop5"><strong>NOMOR PESERTA</strong></span></td>
+                                        <td width="5%">:</td>
+                                        <td class="kop5 topku"><%= noUrut(data.reg_fl_id) %></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="topku"><span class="kop5"><strong>NAMA</strong></span></td>
+                                        <td class="topku">:</td>
+                                        <td class="kop5 topku upper"><strong><%= data.nama %></strong></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="topku"><span class="kop5">NOMOR KTP</span></td>
+                                        <td class="topku">:</td>
+                                        <td class="kop5 topku upper"><%= data.no_ktp %></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="topku"><span class="kop5">JENIS KELAMIN</span></td>
+                                        <td class="topku">:</td>
+                                        <td class="kop5 topku"><%= data.master_jenis_kel_uraian %></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="topku"><span class="kop5">TEMPAT, TANGGAL LAHIR</span></td>
+                                        <td class="topku">:</td>
+                                        <td class="kop5 topku"><span class="upper"><%= data.tpt_lahir %> </span>, <%= convertDate(data.tgl_lahir) %></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="topku"><span class="kop5">NO. HANDPONE (HP)</span></td>
+                                        <td class="topku">:</td>
+                                        <td class="kop5 topku"><%= data.hp %></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="topku"><span class="kop5">ALAMAT EMAIL</span></td>
+                                        <td class="topku">:</td>
+                                        <td class="kop5 topku"><%= data.email %> <br><br></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="topku"><span class="kop5"><strong>LOKASI UJIAN</strong></span></td>
+                                        <td class="topku">:</td>
+                                        <td class="kop5 topku"><strong>UNIVERSITAS MANDALA WALUYA</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="topku"><span class="kop5">ALAMAT KAMPUS</span></td>
+                                        <td class="topku">:</td>
+                                        <td class="kop5 topku">Jl. Jend. A.H. Nasution No. G-37 Kambu <br> Kec. Poasia Kota Kendari Prov. Sultra</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="topku"><span class="kop5">PERIODE PENDAFTARAN</span></td>
+                                        <td class="topku">:</td>
+                                        <td class="kop5 topku">TA. 2021/2022 GELOMBANG I (PERTAMA)
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="topku"><span class="kop5">PRODI PILIHAN</span></td>
+                                        <td class="topku">:</td>
+                                        <td class="kop6 topku">
+                                            <% jp.forEach(el => { %>
+                                            <span class="upper"><%= el.pilihan %>. (<%= el.program %>) <%= el.program_studi %> - <%= el.fakultas %> </span>
+                                            <br />
+                                            <% }) %>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="topku"><span class="kop5">JADWAL UJIAN</span></td>
+                                        <td class="topku">:</td>
+                                        <td class="kop5 topku"><strong>29 JUNI 2021 PUKUL 09.00 s/d 11.00 WITA</strong></td>
+                                    </tr>
+
+
+                                </tbody>
+                            </table>
+
+
+                            <br>
+                            <table class="mytable" width="100%">
+                                <tbody class="t_body">
+                                    <tr>
+                                        <td width="60%">
+                                            <span class="kop6">
+                                                <strong>Keterangan :</strong> <br>
+                                                <i>
+                                                    Peserta Ujian wajib membawa pulpen/pensil, penghapus <br>
+                                                    pakaian rapi (kemeja, celana/rok kain), memakai sepatu
+                                                </i>
+                                            </span>
+                                        </td>
+                                        <td width="20%" class="borderCard1">
+                                            <div style="padding:7%">
+                                                <img style="width:100%" src="<%= URLX %>uploads/<%= data.foto %>" alt="">
+                                            </div>
+                                        </td>
+                                        <td width="20%" class="text-center borderCard1">
+                                            <div class="">
+                                                <span class="kop8">Tanda Tangan<br>di sini</span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                           
+                            <div class="text-center">
+                                <span class="kop7">*Peserta dimohon survey Ruangan Ujian 1 hari sebelum pelaksanaan Ujian</span>
+                            </div>
+                           
+
+
+
+
+                        </div>
+                    </div>
+
+
+
+
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+
+
+
+
+    <!-- ================================== CETAK KARTU ===================================== -->
+
+
+
+    <!-- ================================== CETAK KARTU ===================================== -->
+
+</body>
+
+</html>

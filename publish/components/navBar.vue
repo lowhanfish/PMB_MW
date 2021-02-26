@@ -4,80 +4,23 @@
       <div class="colx logoBar" style="width:270px; ">
         <v-img class="logoBarImg" contain src="img/logo1.png" />
       </div>
-
       <div class="rowx barNavigation" align-center >
         <div class="abu_tua " align-center>
-          <v-container class="bottonDrawer text-right"  @click.stop="drawer = !drawer" >
-                <span style="color:white; font-size:8pt"><b>MENU</b></span>
-                <v-icon style="color:white">mdi-menu</v-icon>
+          <v-container class="text-right"  style="margin-top:-6px">
+                  <v-menu offset-y v-if="imgProfile.status">
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-avatar v-bind="attrs" v-on="on">
+                        <img :src="imgProfile.img" alt="No Profile">
+                      </v-avatar>
+                    </template>
+                    <v-list>
+                      <v-list-item @click="logOut()">
+                        <v-list-item-title>Logout</v-list-item-title>
+                      </v-list-item>
+                    </v-list>
+                  </v-menu>
           </v-container>
 
-          <!-- <ul class="menu_ul TopMenuList">
-            <li class="menu_li">
-              <router-link class="h_nav" to="/">Home</router-link>
-            </li>
-            <li class="menu_li">
-              <router-link class="h_nav" to="/">Berita</router-link>
-            </li>
-            <li class="menu_li">
-              <div class="dropdown">
-                <router-link class="h_nav" to="/">Profil</router-link>
-                  <div class="dropdown-content" >
-                    <router-link class="h_nav_sub" to="/">Peraturan Daerah1</router-link>
-                    <router-link class="h_nav_sub" to="/">Peraturan Daerah2</router-link>
-                    <div class="dropdown1">
-
-                      <router-link class="h_nav_sub" to="/">Peraturan Daerah yang alami</router-link>
-                      <div class="dropdown-content1" >
-                        <router-link class="h_nav_sub" to="/">Peraturan Daerah</router-link>
-                        <router-link class="h_nav_sub" to="/">Peraturan Daerah</router-link>
-                        <router-link class="h_nav_sub" to="/">Peraturan Daerah</router-link>
-                      </div>
-
-                    </div>
-                    <router-link class="h_nav_sub" to="/">Peraturan Daerah</router-link>
-                  </div>
-              </div>
-            </li>
-            <li class="menu_li">
-              <div class="dropdown">
-                <router-link class="h_nav" to="/">Data/Informasi</router-link>
-                  <div class="dropdown-content" >
-                    <router-link class="h_nav_sub" to="/">Peraturan Daerah1</router-link>
-                    <router-link class="h_nav_sub" to="/">Peraturan Daerah2</router-link>
-                    <div class="dropdown1">
-
-                      <router-link class="h_nav_sub" to="/">Peraturan Daerah yang alami</router-link>
-                      <div class="dropdown-content1" >
-                        <router-link class="h_nav_sub" to="/">Peraturan Daerah</router-link>
-                        <router-link class="h_nav_sub" to="/">Peraturan Daerah</router-link>
-                        <router-link class="h_nav_sub" to="/">Peraturan Daerah</router-link>
-                      </div>
-
-                    </div>
-                    <router-link class="h_nav_sub" to="/">Peraturan Daerah</router-link>
-                  </div>
-              </div>
-            </li>
-            <li class="menu_li">
-              <router-link class="h_nav" to="/">Agenda/Pengumuman</router-link>
-            </li>
-            <li class="menu_li">
-              <router-link class="h_nav" to="/">Subdomain</router-link>
-            </li>
-             <li class="menu_li">
-              <div class="dropdown">
-                <router-link class="h_nav" to="/">Gallery</router-link>
-                  <div class="dropdown-content" >
-                    <router-link class="h_nav_sub" to="/">Foto</router-link>
-                    <router-link class="h_nav_sub" to="/">Video</router-link>
-                  </div>
-              </div>
-            </li>
-
-
-
-          </ul>-->
         </div>
       </div>
     </div>
@@ -154,26 +97,52 @@ export default {
     return {
 
       drawer: null,
-
-      items: [
-        {
-          icon: 'mdi-apps',
-          title: 'Welcome',
-          to: '/'
-        },
-        {
-          icon: 'mdi-chart-bubble',
-          title: 'Inspire',
-          to: '/inspire'
-        }
-      ],
       title: 'Vuetify.js'
     }
   },
   methods: {
     Route() {
       alert('Yesss')
+    },
+    logOut(){
+      this.$store.commit('ubahState', { name : 'statusLogin',  list : false});
+      localStorage.removeItem("token");
+      localStorage.removeItem("profile");
+    },
+  },
+
+
+
+  computed: {
+    imgProfile() {
+      if (this.$store.state.statusLogin) {
+
+        var get_profile = JSON.parse(localStorage.profile);
+        var profileku = get_profile.profile;
+
+
+
+        return{
+          status : true,
+          img : profileku.img
+        }
+      } else {
+        return{
+          status : false,
+          img : ''
+        }
+      }
     }
+  },
+
+
+
+
+  mounted () {
+    // var get_profile = JSON.parse(localStorage.profile);
+    // var profileku = get_profile.profile;
+
+    // console.log(profileku)
   },
 }
 </script>

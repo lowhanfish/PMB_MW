@@ -33,14 +33,7 @@
                   <span class="h_title_judul_hijau">DOKUMEN PERSIAPAN</span>
                   <hr class="batasAbu1"> <br>
                   <ul>
-                      <li class="h_title_isi">File Ijazah SLTA Sederajat Bagi Pendaftar D3, S1 (PDF)</li>
-                      <li class="h_title_isi">File Transkrip dan Ijazah D-III Bagi Pendaftar Non Reguler/Alih Jenjang (PDF)</li>
-                      <li class="h_title_isi">File Transkrip dan Ijazah S1-Keperawatan Bagi Pendaftar profesi Ners (PDF)</li>
-                      <li class="h_title_isi">File Transkrip dan Ijazah S1 Bagi Pendaftar Prodi Magister (PDF)</li>
-                      <li class="h_title_isi">File e-KTP (PDF)</li>
-                      <li class="h_title_isi">File Kartu Keluarga (PDF)</li>
-                      <li class="h_title_isi">File Ijazah SLTA Sederajat (PDF)</li>
-                      <li class="h_title_isi">File Pas Foto Terbaru warna (png, jpeg, jpg)</li>
+                    <li class="h_title_isi" v-for="data in list_dokPersiapan" :key="data.dokPersiapan_id">{{data.uraian}}</li>
                   </ul>
                 </div>
               </v-col>
@@ -129,7 +122,7 @@
         </v-col>
         <v-col cols="12" md="6" class="bg_kuning_color padding-col text-center">
         <br>
-        <a href="javascript:void(0)">
+        <a href="javascript:void(0)" @click="mdl_fakultas = true">
           <img class="gbr_pimpinan " src="/img/btn_prodi.png" alt="">
         </a>
         <br><br>
@@ -137,6 +130,20 @@
       </v-row>
 
     </div>
+
+
+
+
+    <!-- =========================== LIHAT FOTO ============================== -->
+        <v-dialog v-model="mdl_fakultas" persistent max-width="1024px">
+            <div class="blue-grey darken-4 text-right">
+              <v-btn color="white" icon  @click="mdl_fakultas = false">
+                <v-icon>mdi-close</v-icon>
+              </v-btn>
+            </div>
+              <img width="100%" :src="$store.state.URLX+'uploads/'+list_postDokInfografisFak.img+''" alt="">
+        </v-dialog>
+      <!-- =========================== LIHAT FOTO ============================== -->
 
 
 
@@ -152,6 +159,10 @@
 import Logo from '~/components/Logo.vue'
 import VuetifyLogo from '~/components/VuetifyLogo.vue'
 
+import FETCHING from "../library/fetching";
+import UMUM from "../library/UMUM";
+
+
 export default {
   components: {
     Logo,
@@ -160,51 +171,32 @@ export default {
   },
   data() {
     return {
+      filter : {
+        tahun_id : '',
+        gelombang_id : '',
+      },
+      list_dokPersiapan : [],
+      list_postDokInfografisFak : {
+        img : ''
+      },
 
+      mdl_fakultas : false,
+
+      FETCHING : FETCHING,
+      UMUM : UMUM,
     }
   },
+  methods: {
+    async asycFunc(){
+      this.list_dokPersiapan = await this.FETCHING.postDokPersiapan(this.filter.tahun_id);
+      this.list_postDokInfografisFak = await this.FETCHING.postDokInfografisFak(this.filter.tahun_id);
+    },
+  },
   mounted () {
-
-
-
-
-//  $(function() {
-
-//     var deg = 0;
-//     var rotate = 1;
-//     var club_rotate = setInterval(club_rotate, 25);
-//     $('.circle-item > li').not(".circle-item > *:nth-of-type(8)").mouseenter(function() {
-//         rotate = 0
-//     });
-//     $('.circle-item > li').not(".circle-item > *:nth-of-type(8)").mouseleave(function() {
-//         rotate = 1
-//     });
-//     function club_rotate() {
-//         if (rotate == 0) {
-//             return
-//         }
-//         deg = get_deg(deg + 1);
-//         var deg0 = deg;
-//         var $data = $('.circle-item').children().not(".circle-item > *:nth-of-type(8)");
-//         var length = 13;
-//         if ($(window).width() <= 540) {
-//             length = 7
-//         }
-//         $data.each(function() {
-//             $(this).css("-webkit-transform", "rotate(" + deg0 + "deg) translate(" + length + "em) rotate(-" + deg0 + "deg)").css("transform", "rotate(" + deg0 + "deg) translate(" + length + "em) rotate(-" + deg0 + "deg)");
-//             deg0 = get_deg(deg0 + 51)
-//         })
-//     }
-
-//     function get_deg(deg0) {
-//         if (deg0 > 360)
-//             return (deg0 - 360);
-//         else return deg0
-//     }
-// });
-
-
-
+    var d = new Date();
+    var thn = d.getFullYear();
+    this.filter.tahun_id = thn
+    this.asycFunc();
   },
 }
 </script>

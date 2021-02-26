@@ -12,7 +12,7 @@ const router = express.Router();
 router.post('/view', (req, res) => {
     var form =  req.body.pb
 
-    // console.log(req.body)
+    console.log(req.body)
 
     let query = `
         SELECT 

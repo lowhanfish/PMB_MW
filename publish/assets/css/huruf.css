@@ -138,6 +138,11 @@ a:link {
 }
 
 
+.h_catatan{
+  font-size: 12px;
+}
+
+
 
 @media only screen and (max-width: 1375px) {
   .judulPimpinan{
@@ -151,7 +156,7 @@ a:link {
   }
 
   .h_title_isi{
-    font-size: 12pt;
+    font-size: 10pt;
   }
 
   .h_title_judul_hijau{

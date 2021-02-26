@@ -37,6 +37,7 @@
               <v-text-field
               v-model="user.password"
               label="Password"
+              type="password"
               required />
 
               <!-- <hr class="blueku"> -->

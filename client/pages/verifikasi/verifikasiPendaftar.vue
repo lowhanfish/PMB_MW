@@ -98,8 +98,15 @@
 
         <hr class="batasAbu" />
 
+        <div class="text-center" v-if="loadingView">
+          <br>
+          <img src="/img/loading.gif" width="15%" alt="Loading"> <br>
+          <span class="h_loading">LOADING..!</span> <br>
+          <span class="h_loading_sub">Mohon tunggu..</span>
+        </div>
 
-        <v-simple-table style="width:100%">
+
+        <v-simple-table style="width:100%" v-if="!loadingView">
           <template v-slot:default>
             <thead style="background:#5289E7">
               <tr class="h_table_head">
@@ -124,29 +131,29 @@
                   <v-btn-toggle mandatory>
                     <v-tooltip bottom>
                       <template v-slot:activator="{ on, attrs }">
-                        <v-btn color="light-green darken-1" fab small v-bind="attrs" v-on="on" @click="mdl_view = true">
+                        <v-btn color="light-blue darken-1" fab small v-bind="attrs" v-on="on" @click="getOne(data)">
                           <v-icon color="white">mdi-file-pdf</v-icon>
                         </v-btn>
                       </template>
-                      <span>Lihat Data</span>
+                      <span>Lihat Formulir</span>
                     </v-tooltip>
 
                     <v-tooltip bottom>
                       <template v-slot:activator="{ on, attrs }">
-                        <v-btn color="orange darken-1" fab small v-bind="attrs" v-on="on">
-                          <v-icon color="white">mdi-pencil</v-icon>
+                        <v-btn color="light-green darken-1" fab small v-bind="attrs" v-on="on" @click="selectData(data, 2) ,mdl_konfirmasi=true" :disabled="disabledCrud(filter.status)">
+                          <v-icon color="white">mdi-comment-check</v-icon>
                         </v-btn>
                       </template>
-                      <span>Ubah Data</span>
+                      <span>Konfirmasi Data</span>
                     </v-tooltip>
 
                     <v-tooltip bottom>
                       <template v-slot:activator="{ on, attrs }">
-                        <v-btn color="red darken-4" fab small v-bind="attrs" v-on="on" @click="mdl_kembalikan=true">
-                          <v-icon color="white">mdi-delete</v-icon>
+                        <v-btn color="red darken-4" fab small v-bind="attrs" v-on="on" @click="selectData(data, 3) ,mdl_kembalikan=true" :disabled="disabledCrud(filter.status)">
+                          <v-icon color="white">mdi-close-box-outline</v-icon>
                         </v-btn>
                       </template>
-                      <span>Hapus Data</span>
+                      <span>Kembalikan Data</span>
                     </v-tooltip>
                   </v-btn-toggle>
                 </td>
@@ -159,7 +166,7 @@
       <br />
       <hr class="batasAbu" />
 
-      <div class="text-center">
+      <div class="text-center" v-if="!loadingView">
         <v-container>
           <v-row justify="center">
             <v-col cols="12">
@@ -195,17 +202,22 @@
               </v-btn>
             </v-app-bar>
             <v-card-text>
+
               <v-container>
                 <!-- ISI KONTENT -->
-                <profilPendaftar userId="xxxx" tahun_id="2021"/>
+                <profilPendaftar :formx="profileku" :UMUM="UMUM" :tahun_id="filter.tahun_id" :list_jp="list_jp"/>
 
               </v-container>
               <!-- <small>*indicates required field</small> -->
+              <hr class="batasAbu">
+              <br>
+              <div class="text-center">
+                <v-btn class="ma-2" outlined color="indigo" @click="viewPDF(profileku.ijazah)">File Ijazah</v-btn>
+                <v-btn class="ma-2" outlined color="indigo" @click="viewPDF(profileku.transkrip)">File Transkrip</v-btn>
+                <v-btn class="ma-2" outlined color="indigo" @click="viewImage(profileku.bukti_transfer)">Bukti Transfer</v-btn>
+                <v-btn class="ma-2" outlined color="red darken-1"  @click="mdl_view = false">Close</v-btn>
+              </div>
             </v-card-text>
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn color="red darken-1" text @click="mdl_view = false">Close</v-btn>
-            </v-card-actions>
           </v-card>
         </v-dialog>
       <!-- =========================== LIHAT DATA ============================== -->
@@ -224,20 +236,112 @@
               </v-btn>
             </v-app-bar>
             <v-card-text>
-              <v-container>
                 <!-- ISI KONTENT -->
+                <br>
+                <v-textarea
+                  v-model="form.keterangan"
+                  outlined
+                  label="Alasan Pengembalian"
+                ></v-textarea>
 
-              </v-container>
-              <small>*indicates required field</small>
             </v-card-text>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn color="blue darken-1" text >Kembalikan</v-btn>
+              <v-btn color="blue darken-1" text @click="kembalikanData()">Kembalikan</v-btn>
               <v-btn color="red darken-1" text @click="mdl_kembalikan = false">Close</v-btn>
             </v-card-actions>
           </v-card>
         </v-dialog>
       <!-- =========================== KEMBALIKAN DATA ============================== -->
+
+      <!-- =========================== KONFIRMASI DATA ============================== -->
+        <v-dialog v-model="mdl_konfirmasi" persistent max-width="600px">
+
+          <v-card>
+            <v-app-bar flat class="green darken-1">
+              <v-toolbar-title class="title white--text pl-0">
+                Form Konfirmasi
+              </v-toolbar-title>
+              <v-spacer></v-spacer>
+              <v-btn color="white" icon  @click="mdl_konfirmasi = false">
+                <v-icon>mdi-close</v-icon>
+              </v-btn>
+            </v-app-bar>
+            <v-card-text>
+              <br>
+              <div class="text-center">
+                <span>Apakah anda yakin ingin mengonfirmasi pendaftar ini?</span>
+              </div>
+
+            </v-card-text>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn color="blue darken-1" text @click="kembalikanData()">Konfirmasi</v-btn>
+              <v-btn color="red darken-1" text @click="mdl_konfirmasi = false">Close</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+      <!-- =========================== KONFIRMASI DATA ============================== -->
+
+
+      <!-- =========================== LIHAT FOTO ============================== -->
+        <v-dialog v-model="mdl_file_gambar" persistent max-width="600px">
+
+          <v-card>
+            <v-app-bar flat class="light-green darken-2">
+              <v-toolbar-title class="title white--text pl-0">
+                File Gambar
+              </v-toolbar-title>
+              <v-spacer></v-spacer>
+              <v-btn color="white" icon  @click="mdl_file_gambar = false">
+                <v-icon>mdi-close</v-icon>
+              </v-btn>
+            </v-app-bar>
+            <v-card-text>
+
+              <v-container>
+                <br>
+                <img width="100%" :src="$store.state.URLX+'uploads/'+file" alt="">
+              </v-container>
+            </v-card-text>
+              <br>
+          </v-card>
+        </v-dialog>
+      <!-- =========================== LIHAT FOTO ============================== -->
+
+
+
+      <!-- =========================== LIHAT PDF ============================== -->
+        <v-dialog v-model="mdl_file_pdf" persistent max-width="980px">
+
+          <v-card>
+            <v-app-bar flat class="light-green darken-2">
+              <v-toolbar-title class="title white--text pl-0">
+                File Lampiran
+              </v-toolbar-title>
+              <v-spacer></v-spacer>
+              <v-btn color="white" icon  @click="mdl_file_pdf = false">
+                <v-icon>mdi-close</v-icon>
+              </v-btn>
+            </v-app-bar>
+            <v-card-text>
+
+              <v-container>
+                <br>
+                <vuePdf
+                  v-for="i in numPages"
+                  :key="i"
+                  :src="pdfSrc"
+                  :page="i"
+                  style="display: inline-block; width: 100%"
+                ></vuePdf>
+
+              </v-container>
+            </v-card-text>
+              <br>
+          </v-card>
+        </v-dialog>
+      <!-- =========================== LIHAT PDF ============================== -->
 
     <!-- ++++++++++++++++++++++++++++++++++++++ MODAL ++++++++++++++++++++++++++++++++++++++++++ -->
   </div>
@@ -248,15 +352,52 @@
 import FETCHING from "../../library/fetching";
 import UMUM from "../../library/umum.js";
 
+var vuePdf;
+if (process.browser) {
+  vuePdf = require('vue-pdf').default
+}
+
   export default {
+    components: {
+      vuePdf,
+    },
 
     data () {
       return {
         form : {
-          id : '',
-          uraian : '',
+          gelombang_id : "",
+          tahun_id : "",
+          userId : '',
+          reg_fl_id : '',
+          stat_pembayaran : 1,
+          keterangan : '',
           singkatan : '',
+          email : '',
         },
+
+        file : '',
+        list_data : [],
+        list_tahun : [],
+        list_gelombang : [],
+        list_prodi : [],
+
+        profileku : null,
+        list_jp : [],
+
+
+        mdl_view : false,
+        mdl_kembalikan : false,
+        mdl_konfirmasi : false,
+        mdl_file_gambar : false,
+        mdl_file_pdf : false,
+
+        filter : {
+          tahun_id : '',
+          gelombang_id : '',
+          prodi_id : '',
+          status : 1,
+        },
+
         page_first: 1,
         page_last: 0,
         page_limit : 10,
@@ -264,29 +405,12 @@ import UMUM from "../../library/umum.js";
         FETCHING : FETCHING,
         UMUM : UMUM,
 
-        list_data : [],
-        list_tahun : [],
-        list_gelombang : [],
-        list_prodi : [],
 
+        pdfSrc: '',
+        pdfPageCount : 0,
+        numPages: undefined,
 
-        mdl_view : false,
-        mdl_kembalikan : false,
-
-        FETCHING : FETCHING,
-        UMUM : UMUM,
-
-        cthSelect : '',
-        eventTestt : '',
-
-        filter : {
-          tahun_id : '',
-          gelombang_id : '',
-          prodi_id : '',
-          status : 1,
-
-        }
-
+        loadingView : false,
 
 
       }
@@ -294,6 +418,7 @@ import UMUM from "../../library/umum.js";
     methods: {
       getView : function(){
         // this.$store.commit("shoWLoading");
+        this.loadingView = true;
         fetch(this.$store.state.url.URL_MAIN_verifikasi + "view", {
             method: "POST",
             headers: {
@@ -315,13 +440,52 @@ import UMUM from "../../library/umum.js";
               console.log(res_data)
               this.list_data = res_data.data;
               this.page_last = res_data.jml_data;
+              this.loadingView = false;
         });
       },
 
 
-      addData : function(number) {
+      getOne : function(data){
+        // this.$store.commit("shoWLoading");
+        fetch(this.$store.state.url.URL_MAIN_verifikasi + "getOne", {
+            method: "POST",
+            headers: {
+              "content-type": "application/json",
+              authorization: "kikensbatara " + localStorage.token
+            },
+            body: JSON.stringify({
+                userId : data.userId,
+                tahun_id : this.filter.tahun_id,
+                gelombang_id : this.filter.gelombang_id,
+            })
+        })
+            .then(res => res.json())
+            .then(res_data => {
+              this.profileku = res_data.data[0];
+              this.list_jp = res_data.jp;
+              this.mdl_view = true;
+              console.log(res_data)
+
+        });
+      },
+
+      viewImage(file){
+        this.file = file
+        this.mdl_file_gambar = true
+      },
+
+      viewPDF(file){
+        this.pdfSrc = vuePdf.createLoadingTask(this.$store.state.URLX+'uploads/'+file)
+        this.pdfSrc.promise.then(pdf => {
+          this.numPages = pdf.numPages;
+        });
+        this.mdl_file_pdf = true
+      },
+
+
+      kembalikanData : function(number) {
         // this.form.createdAt = UMUM.NOW()
-        fetch(this.$store.state.url.URL_MAIN_verifikasi + "addData", {
+        fetch(this.$store.state.url.URL_MAIN_verifikasi + "kembalikanData", {
             method: "POST",
             headers: {
               "content-type": "application/json",
@@ -329,51 +493,63 @@ import UMUM from "../../library/umum.js";
             },
             body: JSON.stringify(this.form)
         }).then(res_data => {
+            this.mdl_konfirmasi = false;
+            this.mdl_kembalikan = false;
             this.getView();
-            this.$store.commit('notifAdd', 'Menambah')
-        });
-
-
-      },
-
-      editData : function(){
-        fetch(this.$store.state.url.URL_MAIN_verifikasi + "editData", {
-            method: "POST",
-            headers: {
-              "content-type": "application/json",
-              authorization: "kikensbatara " + localStorage.token
-            },
-            body: JSON.stringify(this.form)
-        }).then(res_data => {
-
-            this.getView();
-            this.$store.commit('notifAdd', 'Mengubah')
+            this.$store.commit('notifAdd', 'Mengembalikan')
         });
       },
 
-      removeData : async function(data){
+      // editData : function(){
+      //   fetch(this.$store.state.url.URL_MAIN_verifikasi + "editData", {
+      //       method: "POST",
+      //       headers: {
+      //         "content-type": "application/json",
+      //         authorization: "kikensbatara " + localStorage.token
+      //       },
+      //       body: JSON.stringify(this.form)
+      //   }).then(res_data => {
 
-        await UMUM.notifDelete();
-        fetch(this.$store.state.url.URL_MAIN_verifikasi + "removeData", {
-            method: "POST",
-            headers: {
-              "content-type": "application/json",
-              authorization: "kikensbatara " + localStorage.token
-            },
-            body: JSON.stringify(data)
-        }).then(res_data => {
-            this.getView();
-            this.mdl_remove = false;
-            this.$store.commit('notifAdd', 'Menghapus')
-        });
+      //       this.getView();
+      //       this.$store.commit('notifAdd', 'Mengubah')
+      //   });
+      // },
 
-      },
+      // removeData : async function(data){
 
-      selectData : async function(data){
-          this.form.id = data.id;
-          this.form.uraian = data.uraian;
+      //   await UMUM.notifDelete();
+      //   fetch(this.$store.state.url.URL_MAIN_verifikasi + "removeData", {
+      //       method: "POST",
+      //       headers: {
+      //         "content-type": "application/json",
+      //         authorization: "kikensbatara " + localStorage.token
+      //       },
+      //       body: JSON.stringify(data)
+      //   }).then(res_data => {
+      //       this.getView();
+      //       this.mdl_remove = false;
+      //       this.$store.commit('notifAdd', 'Menghapus')
+      //   });
+
+      // },
+
+      selectData : async function(data, value){
+        console.log(data)
+          this.form.gelombang_id = data.gelombang_id;
+          this.form.tahun_id = data.tahun_id;
+          this.form.userId = data.userId;
+          this.form.reg_fl_id = data.reg_fl_id;
+          this.form.keterangan = data.keterangan;
           this.form.singkatan = data.singkatan;
-
+          this.form.email = data.email;
+          this.form.stat_pembayaran = value;
+      },
+      disabledCrud(data){
+        if (data == 2 || data == 3) {
+          return true
+        } else {
+          return false
+        }
       },
 
       // ====================================== PAGINATE ====================================

@@ -229,6 +229,74 @@ const getGelombang = async ()=>{
 
 
 
+const postRegFl = async (tahun_id, gelombang_id)=>{
+  var pb={
+    tahun_id : tahun_id,
+    gelombang_id : gelombang_id,
+  }
+  return new Promise(resolve=>{
+    fetch(store.url.URL_publish_fl + "view", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        authorization: "kikensbatara " + localStorage.token
+      },
+      body: JSON.stringify({
+        pb : pb
+      })
+    })
+      .then(res => res.json())
+      .then(res_data => {
+        // console.log(res_data)
+        resolve(res_data)
+  });
+  })
+}
+
+
+const postDokPersiapan = async (tahun_id)=>{
+  return new Promise(resolve=>{
+    fetch(store.url.URL_PUBLISH_publishDokPersiapan + "", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        authorization: "kikensbatara " + localStorage.token
+      },
+      body: JSON.stringify({
+        tahun_id : tahun_id
+      })
+    })
+      .then(res => res.json())
+      .then(res_data => {
+        // console.log(res_data)
+        resolve(res_data)
+  });
+  })
+}
+
+const postDokInfografisFak = async (tahun_id)=>{
+  return new Promise(resolve=>{
+    fetch(store.url.URL_PUBLISH_publishDokInfografisFak + "", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        authorization: "kikensbatara " + localStorage.token
+      },
+      body: JSON.stringify({
+        tahun_id : tahun_id
+      })
+    })
+      .then(res => res.json())
+      .then(res_data => {
+        console.log(res_data)
+        resolve(res_data)
+  });
+  })
+}
+
+
+
+
 
 
 
@@ -258,5 +326,8 @@ module.exports = {
     getTahun : getTahun,
     getGelombang : getGelombang,
     postProdiRelasi : postProdiRelasi,
+    postRegFl : postRegFl,
+    postDokPersiapan : postDokPersiapan,
+    postDokInfografisFak : postDokInfografisFak,
 
 }

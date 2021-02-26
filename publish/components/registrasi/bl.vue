@@ -199,39 +199,14 @@
 
               <v-container>
                 <br>
-                <!-- <no-ssr>
-                  <vuePdf src="https://file-examples-com.github.io/uploads/2017/10/file-example_PDF_1MB.pdf"></vuePdf>
-                </no-ssr> -->
-
-
-
-
                 <vuePdf
-            v-for="i in numPages"
-            :key="i"
-            :src="pdfSrc"
-            :page="i"
-            style="display: inline-block; width: 100%"
-          ></vuePdf>
+                  v-for="i in numPages"
+                  :key="i"
+                  :src="pdfSrc"
+                  :page="i"
+                  style="display: inline-block; width: 100%"
+                ></vuePdf>
 
-
-
-
-                <!-- {{currentPage}} / {{pageCount}} -->
-
-                <!-- <pdf
-                  class="your-pdf-class"
-                  :src="'https://file-examples-com.github.io/uploads/2017/10/file-example_PDF_1MB.pdf'"
-                  :page="3"
-                /> -->
-                 <!-- <client-only>
-                    <pdf class="your-pdf-class" :src="'https://file-examples-com.github.io/uploads/2017/10/file-example_PDF_1MB.pdf'" :page="1" @num-pages="pdfPageCount = $event"></pdf>
-                    <div v-if="pdfPageCount > 1">
-                        <div v-for="(pageNum, index) in pdfPageCount " :key="index">
-                            <pdf class="your-pdf-class" :src="'https://file-examples-com.github.io/uploads/2017/10/file-example_PDF_1MB.pdf'" :page="pageNum" v-if="pageNum > 1"></pdf>
-                        </div>
-                    </div>
-                </client-only> -->
               </v-container>
             </v-card-text>
               <br>
@@ -239,7 +214,7 @@
         </v-dialog>
       <!-- =========================== LIHAT PDF ============================== -->
 
-      <!-- =========================== LIHAT PDF ============================== -->
+      <!-- =========================== KIRIM DATA ============================== -->
         <v-dialog v-model="mdl_sendData" persistent max-width="600px">
 
           <v-card>
@@ -269,7 +244,7 @@
               <br>
           </v-card>
         </v-dialog>
-      <!-- =========================== LIHAT PDF ============================== -->
+      <!-- =========================== KIRIM DATA ============================== -->
 
 
 
@@ -328,8 +303,6 @@ export default {
 
       pdfSrc: '',
       pdfPageCount : 0,
-
-      // src: loadingTask,
 			numPages: undefined,
 
     }

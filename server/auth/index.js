@@ -148,6 +148,8 @@ router.post('/login', (req, res, next) =>{
 
 router.post('/loginUsers', (req, res, next) =>{
 
+    console.log(req.body)
+
     console.log('LOGIN SDH DI PANGGGIL')
 
 
@@ -178,12 +180,13 @@ function registrasiPendaftar(req,res,row){
     
     bcrypt.hash(req.body.id.trim(), 12).then(hashedPassword => {
         const query = `
-            INSERT INTO users (id, username, nama, email, password, menu_klp)
+            INSERT INTO users (id, username, nama, email, img, password, menu_klp)
             VALUES (
                 '`+uniqid()+`',
                 '`+req.body.id+`',
                 '`+req.body.nama+`',
                 '`+req.body.email+`',
+                '`+req.body.foto+`',
                 '`+hashedPassword+`',
                 20
             )
@@ -221,7 +224,8 @@ function loginPendaftar(req,res,row){
                 profile : {
                     nama : user.nama,
                     email : user.email,
-                    username : user.username
+                    username : user.username,
+                    img : user.img
                 }
             };
             

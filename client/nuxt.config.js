@@ -1,6 +1,16 @@
 import colors from 'vuetify/es5/util/colors'
 
 export default {
+  server: {
+    port: 4000, // default: 3000
+    host: '0.0.0.0', // default: localhost
+  },
+  build: {
+    // ... other build config,
+      terser: {
+          extractComments: false // default was LICENSES
+      }
+  },
   // Disable server-side rendering (https://go.nuxtjs.dev/ssr-mode)
   ssr: false,
 
@@ -13,15 +23,22 @@ export default {
 
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
-    titleTemplate: '%s - kikenSinglePage',
-    title: 'kikenSinglePage',
+    titleTemplate: '%s - Univ-MW',
+    title: 'Admin-PMB',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: '' }
+      { hid: 'description', name: 'description', content: '' },
+      { name: 'msapplication-TileColor', content: '#da532c' },
+      { name: 'theme-color', content: '#ffffff' },
     ],
     link: [
-      { rel: 'icon', type: 'image/png', href: '/icon3.png' }
+      { rel: 'apple-touch-icon', type: 'image/png', sizes: "180x180", href: '/apple-touch-icon.png' },
+      { rel: 'icon', type: 'image/png', sizes: "32x32", href: '/favicon-32x32.png' },
+      { rel: 'icon', type: 'image/png', sizes: "16x16", href: '/favicon-16x16.png' },
+      { rel: 'manifest', href: '/site.webmanifestg' },
+      { rel: 'mask-icon', href: '/safari-pinned-tab.svg', color:'#5bbad5' },
+      { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300;700&display=swap' },
     ],
     script: [
       {src: 'https://code.highcharts.com/highcharts.js'},
@@ -89,5 +106,9 @@ export default {
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {
-  }
+    vendor: ['vue-pdf'],
+    extend(config, ctx) {
+        config.output.globalObject = 'this'
+    }
+  },
 }

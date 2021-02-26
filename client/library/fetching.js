@@ -255,10 +255,6 @@ const getProdi = async ()=>{
 
 const barChart = store
 
-
-
-
-
 module.exports = {
     barChart : barChart,
     getMasterMenu : getMasterMenu,

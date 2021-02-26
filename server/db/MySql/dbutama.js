@@ -9,9 +9,9 @@ var db = mysql.createConnection({
 // var mysql = require('mysql');
 // var db = mysql.createConnection({
 //   host     : 'localhost',
-//   user     : 'stikesm1_stikes',
-//   password : 'stikesmw123#',
-//   database : 'stikesm1_daftar_online',
+//   user     : 'unia7261_unia7261',
+//   password : 'menang1B',
+//   database : 'unia7261_pmb',
 //   port: 3306,
 //   debug: true
 // });

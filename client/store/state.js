@@ -1,4 +1,5 @@
 var URL = 'http://localhost:5014/';
+// var URL = 'https://report.univ-mw.com/'
 
 
 
@@ -30,9 +31,12 @@ const lolow = {
       URL_DM_master_kabupaten : URL + 'api/v1/master_kabupaten/',
       URL_DM_master_provinsi : URL + 'api/v1/master_provinsi/',
 
-
       URL_MAIN_verifikasi : URL + 'api/v1/verifikasi/',
       URL_MAIN_laporanVerifikasi : URL + 'api/v1/laporanVerifikasi/',
+
+      URL_MAIN_dokPersiapan : URL + 'api/v1/dokPersiapan/',
+      URL_MAIN_dokTahapPendaftaran : URL + 'api/v1/dokTahapPendaftaran/',
+      URL_MAIN_dokInfografisFak : URL + 'api/v1/dokInfografisFak/',
     },
 
     btn : {

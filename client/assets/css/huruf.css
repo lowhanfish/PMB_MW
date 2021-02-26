@@ -109,3 +109,37 @@
 .upper{
   text-transform: uppercase;
 }
+
+
+.h_midle{
+  vertical-align: middle !important;
+}
+
+
+.h_cetak_head{
+  font-size: 8pt !important;
+  /* font-family: Helvetica, Arial, sans-serif; */
+  font-family: 'Roboto Condensed', sans-serif;
+}
+
+.h_cetak_body{
+  font-size: 8pt !important;
+  font-family: 'Roboto Condensed', sans-serif;
+}
+
+.h_besar{
+  text-transform: uppercase;
+}
+
+
+.h_loading{
+  font-weight: 700;
+  font-size: 12pt;
+  color: #ca6d6d;
+}
+
+.h_loading_sub{
+  font-weight: 500;
+  color: #22b573;
+  font-size: 10pt;
+}

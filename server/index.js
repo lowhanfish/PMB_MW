@@ -20,8 +20,20 @@ app.use(cors({
   origin : '*'
 }));
 app.use(express.json());
-
 app.use(middleware.checkTokenSeetUser);
+
+// 1. sebelumnya tentukan dulu folder staticnya, maksudnya yg dapat diakses oleh publik tanpa terpengaruh route
+app.use(express.static('public'));
+app.use('/css', express.static(__dirname + 'public/css'))
+app.use('/img', express.static(__dirname + 'public/img'))
+app.use('/js', express.static(__dirname + 'public/js'))
+
+// 2. selanjutnya set dulu inisial folder views-nya 
+app.set('views', './views')
+
+// 3. setelah itu kita tentukan template engine yg akan kita gunakan
+app.set('view engine', 'ejs')
+
 
 
 app.get('/', (req, res) => {
@@ -58,6 +70,9 @@ app.use('/checkAuth', middleware.isLoggedIn, checkAuth);
 
 
     // MAIN SERVER
+
+    const dashboard = require('./apiMysql/mainPMB/dashboard');
+    app.use('/api/v1/dashboard', middleware.isLoggedIn, dashboard);
 
     const master_agama = require('./apiMysql/dataMaster/pmb/master_agama');
     app.use('/api/v1/master_agama', middleware.isLoggedIn, master_agama);
@@ -97,6 +112,13 @@ app.use('/checkAuth', middleware.isLoggedIn, checkAuth);
     app.use('/api/v1/verifikasi', middleware.isLoggedIn, verifikasi);
     const laporanVerifikasi = require('./apiMysql/mainPMB/laporanVerifikasi');
     app.use('/api/v1/laporanVerifikasi', middleware.isLoggedIn, laporanVerifikasi);
+
+    const dokPersiapan = require('./apiMysql/mainPMB/dokPersiapan');
+    app.use('/api/v1/dokPersiapan', middleware.isLoggedIn, dokPersiapan);
+    const dokTahapPendaftaran = require('./apiMysql/mainPMB/dokTahapPendaftaran');
+    app.use('/api/v1/dokTahapPendaftaran', middleware.isLoggedIn, dokTahapPendaftaran);
+    const dokInfografisFak = require('./apiMysql/mainPMB/dokInfografisFak');
+    app.use('/api/v1/dokInfografisFak', middleware.isLoggedIn, dokInfografisFak);
     // END MAIN SERVER
 
 
@@ -113,6 +135,16 @@ app.use('/checkAuth', middleware.isLoggedIn, checkAuth);
     app.use('/api/v1/publish_jp', middleware.isLoggedIn, publish_jp);
     const publish_ot = require('./apiMysql/publish/ot');
     app.use('/api/v1/publish_ot', middleware.isLoggedIn, publish_ot);
+
+    const kartu = require('./apiMysql/publish/kartu');
+    app.use('/kartu', kartu);
+
+    const publishDokPersiapan = require('./apiMysql/publish/publishDokPersiapan');
+    app.use('/api/v1/publishDokPersiapan', publishDokPersiapan);
+    const publishDokInfografisFak = require('./apiMysql/publish/publishDokInfografisFak');
+    app.use('/api/v1/publishDokInfografisFak', publishDokInfografisFak);
+
+
    
     // PUBLISH
 
