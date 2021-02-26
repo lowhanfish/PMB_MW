@@ -1,5 +1,5 @@
-var URL = 'http://localhost:5014/';
-// var URL = 'https://report.univ-mw.com/'
+// var URL = 'http://localhost:5014/';
+var URL = 'https://report.univ-mw.com/'
 
 
 
@@ -49,6 +49,11 @@ const lolow = {
     type : [
       {id : 0, uraian : 'Single Menu'},
       {id : 1, uraian : 'Multy Menu'}
+    ],
+
+    statusOpen : [
+      {id : 0, uraian : 'Tidak Aktif'},
+      {id : 1, uraian : 'Aktif'}
     ],
 
     status : [

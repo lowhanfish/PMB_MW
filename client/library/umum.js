@@ -65,12 +65,22 @@ const tglConvert = (tgl) => {
 
 
 
+const statusGel = (data) =>{
+  if (data == '0') {
+    return 'Tertutup'
+  } else {
+    return 'Terbuka'
+  }
+}
+
+
 
 module.exports = {
 
   notifDelete : notifDelete,
   replaceStr : replaceStr,
   ArrToObj : ArrToObj,
-  tglConvert : tglConvert
+  tglConvert : tglConvert,
+  statusGel : statusGel,
 
 }

@@ -283,7 +283,7 @@
 
 
                   <v-col cols="12" md="6"  class="divInput1">
-                    <small>*Icon (<a href="http://code.meta-platform.com/assets/mdi/preview.html" target="_blank">referensi</a>)</small>
+                    <small>*Icon (<a href="https://pictogrammers.github.io/@mdi/font/5.4.55/" target="_blank">referensi</a>)</small>
                     <v-text-field v-model="form.icon" class="placeholerku" outlined dense required/>
                   </v-col>
 
@@ -350,7 +350,7 @@
 
 
                   <v-col cols="12" md="6"  class="divInput1">
-                    <small>*Icon (<a href="http://code.meta-platform.com/assets/mdi/preview.html" target="_blank">referensi</a>)</small>
+                    <small>*Icon (<a href="https://pictogrammers.github.io/@mdi/font/5.4.55/" target="_blank">referensi</a>)</small>
                     <v-text-field v-model="form.icon" class="placeholerku" outlined dense required/>
                   </v-col>
 

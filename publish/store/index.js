@@ -1,5 +1,4 @@
 
-// var URL = 'https://dokumentasi.suara2020.com/';
 
 var URL = 'http://localhost:5014/';
 // var URL = 'https://report.univ-mw.com/'

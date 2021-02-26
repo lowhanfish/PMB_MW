@@ -279,6 +279,14 @@ export default {
     funcAwait : async function(){
       this.list_tahun = await this.FETCHING.getTahun();
       this.list_gelombang = await this.FETCHING.getGelombang();
+
+      var d = new Date();
+      var thn = d.getFullYear();
+      this.filter = {
+        tahun_id : thn,
+        gelombang_id : this.list_gelombang[0].gelombang_id,
+      }
+      this.viewAll()
     },
 
 
@@ -296,7 +304,7 @@ export default {
 
   mounted () {
     this.funcAwait();
-    this.viewAll()
+
   },
 }
 </script>

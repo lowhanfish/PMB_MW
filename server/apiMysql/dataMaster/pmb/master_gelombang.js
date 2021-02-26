@@ -99,13 +99,31 @@ router.post('/addData', (req,res)=>{
 // UPDATE `master_gelombang` SET `uraian` = 'aaaaaa' WHERE `master_gelombang`.`gelombang_id` = 1;
 
 router.post('/editData', (req,res)=>{
+
+    console.log(req.body)
+
+
+    var editStatus = ''
+    if (req.body.status == null || req.body.status == undefined) {
+        console.log('Kosong')
+        editStatus = ''
+    } else {
+        console.log('Tidka Kosong')
+        editStatus = `status = `+req.body.status+`,`
+    }
+
+
+
     query = `
     UPDATE master_gelombang SET
     uraian = '`+req.body.uraian+`',
+    `+editStatus+`
     keterangan = '`+req.body.keterangan+`'
 
     WHERE gelombang_id = '`+req.body.gelombang_id+`'
     `;
+
+    console.log(query)
     db.query(query, (err, row)=>{
         if(err) {
             console.log(err);

@@ -19,6 +19,15 @@ export default {
       { hid: 'description', name: 'description', content: '' },
       { name: 'msapplication-TileColor', content: '#da532c' },
       { name: 'theme-color', content: '#ffffff' },
+
+      { property: 'fb:app_id', content: '1879416282388598' },
+      { property: 'og:url', content: 'https://pmb.univ-mw.com' },
+      { property: 'og:type', content: 'article' },
+      { property: 'og:title', content: 'DAFTAR ONLINE UNIVERSITAS MANDALA WALUYA KENDARI' },
+      { property: 'og:description', content: 'Penerimaan Mahasiswa Baru Online T.A 2021-2022' },
+      { property: 'og:image', content: 'https://pmb.univ-mw.com/img/logo.jpg' }
+
+
     ],
     link: [
       { rel: 'apple-touch-icon', type: 'image/png', sizes: "180x180", href: '/apple-touch-icon.png' },
